@@ -1,0 +1,2364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Funny Family Comic Scene Prompt Generator</title>
+<style>
+:root{
+  --purple:#5b17d6;
+  --hot:#ff2aa3;
+  --yellow:#ffd51f;
+  --blue:#19c7ff;
+  --dark:#090616;
+  --card:#ffffff;
+  --ink:#111;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family: Arial, Helvetica, sans-serif;
+  background:
+    radial-gradient(circle at 12% 10%, rgba(255,213,31,.35), transparent 22%),
+    radial-gradient(circle at 80% 15%, rgba(255,42,163,.28), transparent 26%),
+    linear-gradient(135deg,#180028,#080615 55%,#1a0630);
+  color:#fff;
+  overflow-x:hidden;
+}
+.floats span{
+  position:fixed;
+  font-size:34px;
+  opacity:.14;
+  z-index:0;
+  animation:floaty 10s linear infinite;
+}
+.floats span:nth-child(1){left:5%;animation-delay:0s}
+.floats span:nth-child(2){left:22%;animation-delay:2s}
+.floats span:nth-child(3){left:43%;animation-delay:4s}
+.floats span:nth-child(4){left:67%;animation-delay:1s}
+.floats span:nth-child(5){left:88%;animation-delay:3s}
+@keyframes floaty{0%{top:105%;transform:rotate(0)}100%{top:-10%;transform:rotate(360deg)}}
+.wrap{position:relative;z-index:1;max-width:1500px;margin:auto;padding:18px}
+.hero{
+  border:4px solid var(--hot);
+  border-radius:28px;
+  background:linear-gradient(135deg,#7b22ff,#25004f 50%,#050008);
+  box-shadow:0 0 35px rgba(255,42,163,.6);
+  padding:28px;
+  overflow:hidden;
+  position:relative;
+}
+.hero:before{
+  content:"";
+  position:absolute;inset:-100px;
+  background:repeating-linear-gradient(25deg,rgba(255,255,255,.08) 0 2px, transparent 2px 22px);
+  animation:slide 12s linear infinite;
+}
+@keyframes slide{to{transform:translateX(120px)}}
+.hero-content{position:relative;z-index:2;display:grid;grid-template-columns:1fr;gap:10px;text-align:center}
+h1{
+  margin:0;
+  font-size:clamp(38px,6vw,86px);
+  line-height:.92;
+  text-transform:uppercase;
+  color:#fff;
+  text-shadow:5px 5px 0 #000, 0 0 22px var(--yellow);
+  letter-spacing:-2px;
+}
+.sub{
+  font-size:clamp(17px,2vw,25px);
+  color:#fff;
+  max-width:980px;
+  margin:10px auto 0;
+  font-weight:800;
+}
+.marquee{
+  margin:16px 0;
+  background:#000;
+  border-block:3px solid var(--yellow);
+  color:var(--yellow);
+  overflow:hidden;
+  white-space:nowrap;
+  font-weight:900;
+  padding:12px 0;
+}
+.marquee div{display:inline-block;animation:marq 17s linear infinite}
+@keyframes marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.grid{
+  display:grid;
+  grid-template-columns:360px 1fr 460px;
+  gap:18px;
+  align-items:start;
+}
+.panel{
+  background:rgba(255,255,255,.96);
+  color:#111;
+  border:3px solid rgba(255,255,255,.65);
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,.35);
+  padding:16px;
+}
+.panel h2{
+  margin:0 0 12px;
+  background:linear-gradient(90deg,var(--purple),var(--hot));
+  color:white;
+  padding:12px 14px;
+  border-radius:14px;
+  text-transform:uppercase;
+  font-size:18px;
+}
+.control{margin:12px 0}
+label{display:block;font-weight:900;margin-bottom:6px}
+select,input,textarea{
+  width:100%;
+  border:2px solid #ddd;
+  border-radius:12px;
+  padding:11px;
+  font-size:15px;
+  background:#fff;
+  color:#111;
+}
+textarea{min-height:100px;resize:vertical}
+.small{font-size:12px;color:#555;margin-top:5px}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+button{
+  border:0;
+  border-radius:14px;
+  padding:12px 14px;
+  font-weight:900;
+  cursor:pointer;
+  color:#111;
+  background:var(--yellow);
+  box-shadow:0 5px 0 #9b7600;
+  transition:.15s;
+}
+button:hover{transform:translateY(-2px)}
+button:active{transform:translateY(2px);box-shadow:0 2px 0 #9b7600}
+.primary{background:linear-gradient(90deg,var(--hot),var(--yellow));}
+.green{background:#19e336;box-shadow:0 5px 0 #077a16}
+.blue{background:#29d8ff;box-shadow:0 5px 0 #067b96}
+.darkbtn{background:#111;color:#fff;box-shadow:0 5px 0 #444}
+.preset-list{display:grid;gap:8px}
+.preset-list button{text-align:left;background:#fff;border:2px solid #eee;box-shadow:none}
+.preset-list button:hover{border-color:var(--hot)}
+.output{
+  min-height:280px;
+  background:#0d071a;
+  color:#fff;
+  border:3px solid var(--purple);
+  border-radius:18px;
+  padding:16px;
+  white-space:pre-wrap;
+  line-height:1.5;
+  font-size:15px;
+}
+.copy-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.accordion{
+  border:2px solid #eee;
+  border-radius:16px;
+  margin:10px 0;
+  overflow:hidden;
+}
+.acc-head{
+  display:flex;justify-content:space-between;align-items:center;
+  background:#f7f2ff;
+  color:#111;
+  padding:12px;
+  font-weight:900;
+  cursor:pointer;
+}
+.acc-body{padding:12px;display:none}
+.accordion.open .acc-body{display:block}
+.lock{float:right;font-size:12px;background:#111;color:#fff;border-radius:20px;padding:4px 8px}
+.history-item{
+  display:flex;justify-content:space-between;gap:8px;align-items:center;
+  background:#f8f8f8;color:#111;padding:9px;border-radius:10px;margin:6px 0;font-size:13px
+}
+.toast{
+  position:fixed;right:18px;bottom:18px;background:#111;color:#fff;padding:13px 18px;border-radius:15px;
+  border:2px solid var(--yellow);display:none;z-index:99
+}
+.scrollBtns{position:fixed;right:18px;top:45%;z-index:20;display:grid;gap:10px}
+.scrollBtns button{border-radius:50%;width:54px;height:54px;padding:0;background:var(--hot);color:white;box-shadow:0 0 18px var(--hot)}
+.footer{text-align:center;padding:28px;color:#ddd;font-weight:800}
+@media(max-width:1150px){.grid{grid-template-columns:1fr}.panel{width:100%}}
+</style>
+</head>
+<body>
+<div class="floats"><span>💬</span><span>😂</span><span>👶</span><span>🏠</span><span>⚡</span></div>
+<div class="scrollBtns">
+  <button type="button" onclick="scrollPageTop()">⬆</button>
+  <button type="button" onclick="scrollPageBottom()">⬇</button>
+</div>
+<div class="wrap">
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Funny Family Comic Scene<br>Prompt Generator</h1>
+      <p class="sub">Create glossy, exaggerated, high-definition comic prompts with family drama, baby daddy chaos, mom side-eye, toddler mayhem, captions, video scripts, Suno songs, and marketing copy.</p>
+    </div>
+  </section>
+
+  <div class="marquee"><div>✨ Funny Family Drama • Deadbeat Baby Daddy Comedy • Mom Said What She Said • Glossy Comic Prompts • Viral Captions • Video Scripts • Suno Songs • Marketing Copy ✨ &nbsp;&nbsp;&nbsp;</div></div>
+
+  <main class="grid">
+    <aside class="panel">
+      <h2>🔥 Quick Presets</h2>
+      <div class="preset-list" id="presets"></div>
+      <button class="green" style="width:100%;margin-top:12px" onclick="randomizeAll()">🔀 Randomize All</button>
+      <button class="blue" style="width:100%;margin-top:12px" onclick="resetRandomizerMemory()">♻️ Reset Randomizer Memory</button>
+      <button class="darkbtn" style="width:100%;margin-top:12px" onclick="clearAll()">🧹 Clear All</button>
+    </aside>
+
+    <section class="panel">
+      <h2>🎬 Scene Controls</h2>
+      <div id="controls"></div>
+      <div class="btns">
+        <button class="primary" onclick="generatePrompt()">✨ Generate Prompt</button>
+        <button class="blue" onclick="generateAll()">⚡ Generate Everything</button>
+      </div>
+    </section>
+
+    <aside class="panel">
+      <h2>📝 Generated Prompt</h2>
+      <div class="copy-row">
+        <button onclick="copyText('promptOut')">📋 Copy Prompt</button>
+        <button onclick="saveHistory()">💾 Save Prompt</button>
+      </div>
+      <div class="output" id="promptOut">Choose your options, then click Generate Prompt.</div>
+
+      <h2 style="margin-top:16px">🎥 8-Second Video Script</h2>
+      <button onclick="generateVideo()">🎬 Generate Video Script</button>
+      <button onclick="copyText('videoOut')" style="margin-top:8px;width:100%">📋 Copy Video Script</button>
+      <div class="output" id="videoOut">Video script will appear here.</div>
+
+      <h2 style="margin-top:16px">🎵 Suno Music</h2>
+      <button onclick="generateSuno()">🎤 Generate Suno Lyrics</button>
+      <button onclick="copyText('sunoOut')" style="margin-top:8px;width:100%">📋 Copy Suno</button>
+      <div class="output" id="sunoOut">Suno lyrics will appear here.</div>
+
+      <h2 style="margin-top:16px">📣 Marketing Content</h2>
+      <button onclick="generateMarketing()">💰 Generate Marketing</button>
+      <button onclick="copyText('marketingOut')" style="margin-top:8px;width:100%">📋 Copy Marketing</button>
+      <div class="output" id="marketingOut">Marketing content will appear here.</div>
+
+      <h2 style="margin-top:16px">📚 Prompt History</h2>
+      <div id="history"></div>
+      <button class="darkbtn" onclick="clearHistory()" style="width:100%">🗑 Clear History</button>
+    </aside>
+  </main>
+  <div class="footer">all rights reserved by glamorousgrammyglowup</div>
+</div>
+<div class="toast" id="toast">Copied!</div>
+
+<script>
+
+function scrollPageTop(){
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function scrollPageBottom(){
+  const pageHeight = Math.max(
+    document.body.scrollHeight,
+    document.documentElement.scrollHeight,
+    document.body.offsetHeight,
+    document.documentElement.offsetHeight,
+    document.body.clientHeight,
+    document.documentElement.clientHeight
+  );
+  window.scrollTo({ top: pageHeight, behavior: "smooth" });
+}
+
+const data = {
+  "Scene & Setting":["none", "front door entryway", "apartment hallway", "back porch", "baby shower", "barbershop parking lot", "bathroom doorway", "beauty salon", "bedroom doorway", "birthday party", "church lobby", "car seat struggle", "daycare drop-off", "doctor appointment waiting room", "driveway escape", "family cookout", "garage escape", "grocery store aisle", "gym parking lot", "holiday dinner", "kitchen chaos", "laundromat", "living room showdown", "mall food court", "man cave", "parking lot outside the gym", "restaurant booth", "school pickup line", "staircase landing", "target-style store aisle", "toy store aisle", "urgent care waiting room", "front yard", "baby aisle at the store", "car wash parking lot", "coffee shop line", "family reunion", "movie theater lobby", "park playground", "walmart-style checkout line", "gas station parking lot", "sports practice sideline", "airport drop-off curb", "hotel lobby", "photo studio waiting area", "community center lobby"],
+  "Family Ethnicity / Heritage":["none","African American family","Afro-Latina family","Black Caribbean family","Black Southern family","East African family","West African family","Latina family","Mexican American family","Puerto Rican family","Dominican family","Cuban American family","Brazilian family","Native American family","South Asian family","Indian American family","Pakistani American family","Bangladeshi American family","East Asian family","Chinese American family","Japanese American family","Korean American family","Filipino family","Vietnamese family","Middle Eastern family","Arab American family","Persian family","Jewish family","White American family","Italian American family","Irish American family","Greek American family","mixed-race family","multicultural blended family","ambiguous diverse family"],
+  "Family Skin Color":["none","deep espresso skin tones","rich dark brown skin tones","warm mahogany skin tones","golden brown skin tones","caramel brown skin tones","honey brown skin tones","medium olive skin tones","warm tan skin tones","light brown skin tones","beige skin tones","fair skin tones","porcelain skin tones","mixed skin tones across family members","mom deep brown, dad medium brown, child golden brown","mom caramel brown, dad deep espresso, child honey brown","mom warm tan, dad golden brown, child light brown","mom fair, dad deep brown, child caramel brown","mom olive, dad tan, child golden brown"],
+  "Mom's Attitude":["none", "arms folded don't play with me look", "blocking the doorway", "calm but deadly stare", "church smile with silent warning", "dramatic mom glare", "fake polite church smile with hidden rage", "fake smile with rage underneath", "hands on hips furious", "holding baby wipes like evidence", "holding car keys like proof", "holding diaper bag out like a court exhibit", "holding one tiny shoe in disbelief", "looking disappointed but hilarious", "mom face says try me", "mouth open mid-scolding", "one eyebrow lifted in disbelief", "pointing at dad like a referee", "pointing finger like a warning sign", "quiet storm face", "side-eye with raised eyebrow", "standing firm like a courtroom judge", "staring like she already heard every excuse", "unbothered queen energy", "using the baby bottle as evidence", "walking toward dad with slow dramatic steps", "holding a pacifier low in her hand like evidence", "leaning on the door frame with judgment", "giving the look that cancels plans", "holding toddler snacks like receipts", "holding the stroller handle like a warning", "standing in front of the exit like security", "holding Dad's forgotten hoodie", "checking her watch with attitude", "giving soft voice scary mom energy", "folded arms with eyebrow raised", "looking over her glasses", "holding the diaper bag strap like a leash", "doing the silent mom stare", "giving courtroom cross-examination energy"],
+  "Dad's Excuse / Action":["none", "acting shocked he got caught", "checking his phone nervously", "claiming he has a quick errand", "claiming he only needs ten minutes", "halfway out the door looking guilty", "heading to the barbershop", "holding gym bag like evidence", "pretending he forgot something outside", "pretending not to hear mom", "sneaking out for game night", "tiptoeing toward freedom", "trying to leave for the gym", "walking out with headphones on", "going fishing with the boys", "saying he has to move the car", "trying to sneak away with one shoe untied", "backing out the door slowly", "holding a coffee like he has somewhere important to be", "wearing sunglasses indoors to avoid eye contact", "pretending the baby is already asleep", "whispering into his phone like a spy", "trying to close the door quietly", "frozen mid-step with panic eyes", "turning around with a fake innocent smile", "holding keys behind his back", "pointing outside like the car called him", "trying to blend into the wall", "acting like he just remembered an appointment", "holding a towel like the gym is urgent", "checking imaginary notifications", "doing the guilty slow walk", "trying to sneak past with snacks in hand", "looking at the baby like they betrayed him", "pretending to stretch so it looks like exercise", "holding a fishing pole like it explains everything", "trying to escape through the garage", "opening the door one inch at a time", "laughing nervously like it is not serious", "claiming the boys are already waiting"],
+  "Kid's Funny Action":["none", "newborn baby bundled in a blanket while dad nervously holds the diaper bag", "newborn sleeping in a carrier while mom points at dad", "newborn in a stroller with tiny socks peeking out", "newborn in dad's arms looking peaceful while dad looks trapped", "tiny newborn wrapped up while the diaper bag sits beside dad", "1-month-old baby in a car seat carrier near dad's feet", "2-month-old baby staring wide-eyed from a stroller", "3-month-old baby in a front carrier strapped to dad", "4-month-old baby reaching toward dad from mom's arms", "5-month-old baby sitting in a carrier with a pacifier", "6-month-old baby sitting up with a bottle like a tiny boss", "7-month-old baby crawling toward dad with determination", "8-month-old baby reaching for dad's shoe", "9-month-old baby crawling after dad holding a sock", "10-month-old baby pulling on dad's gym bag strap", "11-month-old baby standing wobbly while grabbing dad's pant leg", "12-month-old baby toddling after dad with one shoe on", "1-year-old dragging a tiny blanket behind dad", "1-year-old holding a bottle and following dad", "1-year-old sitting on the diaper bag like luggage", "18-month-old dragging the diaper bag with both hands", "18-month-old chasing dad with tiny shoes", "2-year-old dragging a diaper bag behind dad", "2-year-old wearing dad's gym headband", "2-year-old yelling dada with snacks in hand", "2-year-old holding a sippy cup like a trophy", "2-year-old packed and ready like a road trip", "2-year-old throwing toys into the diaper bag", "2-year-old smiling like they won", "toddler chasing dad with tiny shoes", "toddler wearing dad's gym headband", "toddler dragging a stuffed animal and bottle", "toddler holding a sippy cup like a trophy", "toddler smiling like they won", "baby pointing at dad like a witness", "baby yelling dada with snacks in hand", "baby crawling toward the door determined", "baby wearing backpack bigger than them", "kid holding dad's keys hostage", "kid pulling dad's shorts leg", "kid packed and ready like a road trip", "kid throwing toys into the diaper bag", "newborn making a tiny angry face from the carrier", "newborn with a pacifier while dad looks trapped", "2-month-old wrapped in a blanket like a tiny burrito", "3-month-old strapped to dad while dad tries to leave", "4-month-old holding dad's shirt with tiny fingers", "5-month-old kicking happily in a stroller", "6-month-old holding a toy phone like they called mom", "7-month-old crawling toward dad's sneakers", "8-month-old chewing on dad's gym towel", "9-month-old holding one of dad's socks", "10-month-old tugging the diaper bag zipper", "11-month-old standing at the door holding the wall", "12-month-old waving bye like they are invited", "1-year-old dragging a snack cup behind them", "1-year-old wearing one shoe and holding the other", "18-month-old carrying wipes like luggage", "18-month-old pointing at dad like a tiny witness", "2-year-old dragging dad's hoodie behind him", "2-year-old holding dad's water bottle hostage", "2-year-old trying to climb into dad's gym bag", "toddler sitting on dad's shoes so he cannot leave", "toddler pulling the diaper bag like a suitcase", "toddler wearing oversized sunglasses like a travel boss", "toddler holding a toy car and yelling go go", "toddler blocking the door with a stuffed animal", "toddler waving a tiny sock like a flag"],
+
+  "Extra Kids / Siblings":["none", "one older sibling side-eyeing dad from the couch", "one older sibling holding dad's hoodie and looking betrayed", "one teen daughter filming dad getting caught on her phone", "one teen son standing with arms folded like Also Not Me energy", "two siblings watching dad get caught from behind the laundry pile", "two toddlers laughing near the diaper bag", "baby in walker plus toddler pointing at dad", "older brother holding snacks like he packed for the trip", "little sister blocking the door with a stuffed animal", "sibling holding dad's keys hostage", "siblings sitting on dad's sneakers so he cannot leave", "one preschooler reading a pretend plan notebook", "one kid holding a sign that says Daddy Duty", "two kids peeking from behind mom with dramatic faces", "older sibling pushing the stroller toward dad", "one sibling carrying wipes like luggage", "one sibling dragging dad's gym towel", "teen daughter giving the ultimate side-eye", "teen son pointing at the diaper bag like evidence", "two kids wearing backpacks like they are ready to go", "little sister hugging the diaper bag like treasure", "older brother standing guard by the exit", "siblings surrounding dad's duffel bag", "one child sitting in front of the door like security", "baby in walker with two siblings cheering", "one teen holding a whiteboard that says Sneak Out Failed", "two siblings making courtroom witness faces", "older kid whispering to toddler like a tiny manager", "one sibling holding a bottle while pointing at dad", "three kids in the background reacting like a sitcom audience"],
+  "Mom Speech Bubble":["none", "That is YOUR baby.", "Take him with you then.", "Oh, so you thought you were leaving alone?", "Your son said he got plans too.", "Don’t run now, Daddy Daycare.", "The baby packed before you did.", "You made him, you take him.", "Where you going without your shadow?", "Sir, your responsibility is following you.", "Not today, gym hero.", "The diaper bag has spoken.", "Your baby wants gains too.", "You forgot your tiny manager.", "He said family fitness starts now.", "Absolutely not, sir.", "Your little roommate is coming too.", "You forgot your plus-one.", "Do not act brand new today.", "That baby has your whole face.", "Take your clone with you.", "The stroller is ready, Daddy.", "You and your tiny supervisor can go together.", "Since you got plans, so does he.", "I know you saw that diaper bag.", "Don’t make me use my church voice.", "Your escape route has a toddler toll.", "Go ahead and buckle him in.", "He heard gym and packed snacks.", "You tried it, and failed.", "Daddy duty starts at the door.", "That baby said road trip.", "You leaving? Wonderful. Take him.", "The baby already clocked in.", "Your break got canceled."],
+  "Dad Speech Bubble":["none", "I was only going for one hour.", "I thought he was staying with you.", "Babe, I packed snacks.", "I was gonna call you from the car.", "I already changed one diaper today.", "He said he wanted to come.", "I thought he was asleep.", "This gym bag is not evidence.", "I can explain.", "I was just checking the door.", "I forgot my water bottle.", "I’m not running, I’m walking fast.", "He follows me everywhere.", "I swear this was not the plan.", "Can we talk about this later?", "I just need fresh air.", "The gym closes soon.", "I thought we agreed verbally in my head.", "I was going to be quick quick.", "He likes you more though.", "Why is he already packed?", "I didn’t see the diaper bag.", "I was stretching, not leaving.", "The boys are waiting on me.", "My phone made me do it.", "I was taking out the trash emotionally.", "This is not what it looks like.", "I promise I was coming back.", "I thought nap time counted.", "Can I at least change shoes?", "He packed himself, honestly.", "I’m being framed by a toddler.", "I was checking the weather.", "The car started without me.", "I plead the fifth."],
+  "Kid Speech Bubble":["none", "Dada, wait!", "I go too!", "My bag ready!", "Snack please!", "Daddy daycare!", "No leave me!", "I got shoes!", "I packed it!", "Mama said go!", "Up, Dada!", "I coming!", "Bye Mommy!", "Dada mine!", "Car ride!", "I ready!", "Goo goo!", "Bottle!", "Wahhh!", "Pick me!", "I tiny boss!", "Nap later!", "Diaper first!", "Me go gym!", "Dada hold me!", "I got plans!", "Go go!", "My turn!", "I bring snacks!", "Shoes! Shoes!", "No bye!", "Dada stuck!", "I drive!", "Bag mine!", "Me too!", "I ready ready!", "Where we going?", "Keys please!", "Outside!", "I help!", "Daddy come back!", "Mama said!", "I got juice!", "We leaving?", "I boss baby!", "Wait me!"],
+  "Baby Thought Bubble (Newborn / Infant Only)":["none", "I just got here and he already trying to diss me.", "Sir, I am brand new here.", "I have been alive for five minutes and he already leaving.", "This man better grab my diaper bag.", "I cannot even hold my head up and I know he wrong.", "Daddy tried it.", "I need milk, not excuses.", "So this is the outside drama?", "I was born into nonsense.", "Somebody tell Dad I travel with equipment.", "I do not even know my own toes yet and he leaving.", "Fresh out the womb and already dealing with drama.", "I came with bottles, blankets, and responsibilities.", "Blink twice if Daddy is trying to escape.", "I just got here. Where he going?"],
+  "Comic Style & Vibe":["none","glossy 3D animated cartoon","funny comic strip vibe","Pixar-inspired family comedy style","exaggerated caricature cartoon","Saturday morning cartoon chaos","bold webcomic style","high-definition animated sitcom style","vibrant magazine comic panel","dramatic anime comedy expression style","clean vector comic style","storybook cartoon comedy","urban family comic style","playful meme cartoon style","premium glossy sticker-comic style"],
+  "Expression Level":["none","slightly dramatic expressions","over-the-top dramatic faces","big expressive cartoon eyes","wide-eyed guilty dad face","mom face says try me","baby thrilled and determined","chaotic sitcom expressions","playful exaggerated features","shocked reaction faces","comedic panic faces"],
+  "Background Chaos":["none","toys scattered on the floor","sippy cup rolling across the rug","shoes everywhere by the door","laundry basket overflowing","sticky notes with dad's excuses","gym schedule on the wall","baby snacks spilled nearby","family photos crooked on the wall","dog watching the drama","neighbors peeking through window","cartoon motion lines everywhere","messy but funny family home energy","church bulletin board with announcements","ushers and church ladies quietly watching","folding chairs and welcome table in background","shopping carts, aisle signs, and spilled snacks","customers watching the drama","checkout conveyor belt, shopping carts, price signs, and customers watching","cash register lane with impulse-buy shelves and spilled snacks","waiting room chairs, clinic posters, and people side-eyeing","cubies, tiny chairs, daycare posters, and scattered toys","barber chairs, mirrors, clippers, and customers watching","cars, sidewalk details, open driveway space, neighbors watching, and playful motion lines","restaurant booth, menus, spilled fries, and diners watching","movie posters, concession counter, popcorn buckets, velvet ropes, and people watching","ticket kiosk, theater signs, snack counter, and customers reacting","mall shoppers, storefront signs, stroller traffic, and spilled snacks","school pickup signs, backpacks, parents watching, and kids in the background"],
+  "Lighting & Color":["none","bright vibrant colors","glossy polished finish","warm morning sunlight","neon comic glow","rich saturated color palette","cinematic cartoon lighting","soft home lighting with shiny highlights","high contrast comic lighting","bold colorful family sitcom mood","bright fluorescent laundromat lighting","soft indoor church lobby lighting","bright indoor public lighting","bright grocery store lighting","bright clinic waiting room lighting","bright daycare classroom lighting","bright barbershop lighting","bright outdoor daylight","warm restaurant lighting","bright mall lighting","bright school hallway lighting","soft indoor public lighting"],
+  "Camera & Composition":["none","full scene visible no cropping","wide angle full-body composition","front door centered composition","comic panel layout","focus on all three characters","dynamic motion energy","clear readable speech bubble","balanced family interaction scene","full-body vertical 9:16 framing","Etsy thumbnail friendly composition"],
+  "Output Quality":["none","clean high-resolution ultra-detailed","premium glossy HD finish","crisp outlines and polished highlights","sharp readable text bubble","no cropped heads or feet","no blurry faces","no extra fingers","commercial-quality comic art","fully finished viral social media image"],
+  "Custom Extra Details":[""]
+};
+
+const smartSceneMatches = {
+  "baby shower": {
+    type:"public",
+    chaos:["folding chairs and welcome table in background","baby snacks spilled nearby","customers watching the drama","cartoon motion lines everywhere"],
+    lighting:["bright indoor public lighting","soft indoor public lighting","glossy polished finish","bright vibrant colors"],
+    mom:["holding the stroller handle like a warning","standing firm like a courtroom judge","calm but deadly stare","folded arms with eyebrow raised"],
+    dad:["claiming he only needs ten minutes","claiming he has a quick errand","checking his phone nervously","acting shocked he got caught"],
+    kid:["2-year-old packed and ready like a road trip","1-year-old sitting on the diaper bag like luggage","toddler pulling the diaper bag like a suitcase","kid packed and ready like a road trip"],
+    composition:["full-body vertical 9:16 framing","balanced family interaction scene","focus on all three characters","full scene visible no cropping"],
+    blocked:["family photos crooked on the wall","gym schedule on the wall","shoes everywhere by the door","laundry basket overflowing"]
+  },
+  "car wash": {
+    type:"outdoor",
+    chaos:["cars, sidewalk details, open driveway space, neighbors watching, and playful motion lines","customers watching the drama","cartoon motion lines everywhere"],
+    lighting:["bright outdoor daylight","cinematic cartoon lighting","glossy polished finish","high contrast comic lighting"],
+    mom:["holding diaper bag out like a court exhibit","holding car keys like proof","arms folded don't play with me look","calm but deadly stare"],
+    dad:["holding gym bag like evidence","claiming he only needs ten minutes","checking his phone nervously","backing out the door slowly"],
+    kid:["4-month-old baby reaching toward dad from mom's arms","7-month-old crawling toward dad's sneakers","8-month-old reaching for dad's shoe","toddler pulling the diaper bag like a suitcase"],
+    composition:["full scene visible no cropping","wide angle full-body composition","focus on all three characters","dynamic motion energy"],
+    blocked:["family photos crooked on the wall","gym schedule on the wall","laundry basket overflowing","shoes everywhere by the door","soft home lighting with shiny highlights"]
+  },
+  "garage": {
+    type:"home",
+    chaos:["shoes everywhere by the door","toys scattered on the floor","dog watching the drama","cartoon motion lines everywhere"],
+    lighting:["bright outdoor daylight","warm morning sunlight","high contrast comic lighting","glossy polished finish"],
+    mom:["standing in front of the exit like security","folded arms with eyebrow raised","holding the diaper bag strap like a leash","giving the look that cancels plans"],
+    dad:["trying to escape through the garage","opening the door one inch at a time","claiming he only needs ten minutes","checking his phone nervously"],
+    kid:["newborn with a pacifier while dad looks trapped","2-year-old dragging dad's hoodie behind him","toddler sitting on dad's shoes so he cannot leave","10-month-old tugging the diaper bag zipper"],
+    composition:["full scene visible no cropping","wide angle full-body composition","dynamic motion energy","focus on all three characters"],
+    blocked:["family photos crooked on the wall","laundry basket overflowing"]
+  },
+  "front door": {
+    type:"home",
+    chaos:["shoes everywhere by the door","toys scattered on the floor","sippy cup rolling across the rug","gym schedule on the wall","family photos crooked on the wall","dog watching the drama"],
+    lighting:["warm morning sunlight","soft home lighting with shiny highlights","glossy polished finish","bright vibrant colors"],
+    mom:["arms folded don't play with me look","blocking the doorway","side-eye with raised eyebrow","calm but deadly stare","hands on hips furious"],
+    dad:["trying to leave for the gym","halfway out the door looking guilty","tiptoeing toward freedom","claiming he has a quick errand","pretending not to hear mom"],
+    kid:["newborn sleeping in a carrier while mom points at dad","3-month-old baby in a front carrier strapped to dad","12-month-old baby toddling after dad with one shoe on","18-month-old dragging the diaper bag with both hands","2-year-old dragging a diaper bag behind dad","toddler chasing dad with tiny shoes","kid holding dad's keys hostage","kid pulling dad's shorts leg","baby crawling toward the door determined"],
+    composition:["full scene visible no cropping","front door centered composition","dynamic motion energy","wide angle full-body composition"],
+    blocked:["cartoon motion lines everywhere only"]
+  },
+  "living room": {
+    type:"home",
+    chaos:["toys scattered on the floor","sippy cup rolling across the rug","family photos crooked on the wall","dog watching the drama","messy but funny family home energy","sticky notes with dad's excuses"],
+    lighting:["soft home lighting with shiny highlights","warm morning sunlight","glossy polished finish","bold colorful family sitcom mood"],
+    mom:["side-eye with raised eyebrow","arms folded don't play with me look","hands on hips furious","one eyebrow lifted in disbelief","fake smile with rage underneath"],
+    dad:["sneaking out for game night","pretending not to hear mom","checking his phone nervously","claiming he has a quick errand","tiptoeing toward freedom"],
+    kid:["newborn in a stroller with tiny socks peeking out","6-month-old baby sitting up with a bottle like a tiny boss","1-year-old holding a bottle and following dad","kid holding dad's keys hostage","toddler dragging a stuffed animal and bottle","baby yelling dada with snacks in hand","toddler smiling like they won","kid throwing toys into the diaper bag"],
+    composition:["balanced family interaction scene","focus on all three characters","comic panel layout","full scene visible no cropping"],
+    blocked:[]
+  },
+  "kitchen": {
+    type:"home",
+    chaos:["baby snacks spilled nearby","sippy cup rolling across the rug","toys scattered on the floor","messy but funny family home energy","dog watching the drama"],
+    lighting:["soft home lighting with shiny highlights","warm morning sunlight","bright vibrant colors","glossy polished finish"],
+    mom:["hands on hips furious","calm but deadly stare","pointing finger like a warning sign","mouth open mid-scolding"],
+    dad:["claiming he has a quick errand","pretending he forgot something outside","checking his phone nervously","acting shocked he got caught"],
+    kid:["newborn baby bundled in a blanket while dad nervously holds the diaper bag","5-month-old baby sitting in a carrier with a pacifier","6-month-old baby sitting up with a bottle like a tiny boss","baby yelling dada with snacks in hand","toddler holding a sippy cup like a trophy","kid throwing toys into the diaper bag","toddler smiling like they won"],
+    composition:["balanced family interaction scene","focus on all three characters","full scene visible no cropping"],
+    blocked:["gym schedule on the wall"]
+  },
+  "laundromat": {
+    type:"public",
+    chaos:["laundry basket overflowing","baby snacks spilled nearby","cartoon motion lines everywhere"],
+    lighting:["bright fluorescent laundromat lighting","bright vibrant colors","glossy polished finish","high contrast comic lighting"],
+    mom:["arms folded don't play with me look","side-eye with raised eyebrow","hands on hips furious","pointing finger like a warning sign"],
+    dad:["claiming he has a quick errand","pretending not to hear mom","tiptoeing toward freedom","checking his phone nervously"],
+    kid:["1-month-old baby in a car seat carrier near dad's feet","8-month-old baby reaching for dad's shoe","11-month-old baby standing wobbly while grabbing dad's pant leg","2-year-old dragging a diaper bag behind dad","toddler dragging a stuffed animal and bottle","kid pulling dad's shorts leg","baby yelling dada with snacks in hand"],
+    composition:["wide angle full-body composition","focus on all three characters","dynamic motion energy","full scene visible no cropping"],
+    blocked:["family photos crooked on the wall","gym schedule on the wall","shoes everywhere by the door","soft home lighting with shiny highlights","warm morning sunlight"]
+  },
+  "church": {
+    type:"public",
+    chaos:["church bulletin board with announcements","ushers and church ladies quietly watching","folding chairs and welcome table in background","cartoon motion lines everywhere"],
+    lighting:["soft indoor church lobby lighting","bright indoor public lighting","glossy polished finish","cinematic cartoon lighting"],
+    mom:["fake polite church smile with hidden rage","calm but deadly stare","one eyebrow lifted in disbelief","standing firm like a courtroom judge"],
+    dad:["pretending not to hear mom","claiming he has a quick errand","acting shocked he got caught","checking his phone nervously"],
+    kid:["newborn sleeping in a carrier while mom points at dad","4-month-old baby reaching toward dad from mom's arms","7-month-old baby crawling toward dad with determination","baby yelling dada with snacks in hand","toddler dragging a stuffed animal and bottle","baby pointing at dad like a witness","toddler holding a sippy cup like a trophy"],
+    composition:["balanced family interaction scene","focus on all three characters","clear readable speech bubble","full scene visible no cropping"],
+    blocked:["family photos crooked on the wall","gym schedule on the wall","laundry basket overflowing","shoes everywhere by the door","soft home lighting with shiny highlights","warm morning sunlight"]
+  },
+  "grocery": {
+    type:"public",
+    chaos:["shopping carts, aisle signs, and spilled snacks","baby snacks spilled nearby","cartoon motion lines everywhere","customers watching the drama"],
+    lighting:["bright grocery store lighting","bright indoor public lighting","rich saturated color palette","glossy polished finish"],
+    mom:["calm but deadly stare","side-eye with raised eyebrow","pointing finger like a warning sign","arms folded don't play with me look"],
+    dad:["claiming he has a quick errand","checking his phone nervously","pretending not to hear mom","acting shocked he got caught"],
+    kid:["baby pointing at dad like a witness","baby yelling dada with snacks in hand","kid holding dad's keys hostage","toddler holding a sippy cup like a trophy"],
+    composition:["focus on all three characters","wide angle full-body composition","comic panel layout","full scene visible no cropping"],
+    blocked:["family photos crooked on the wall","gym schedule on the wall","shoes everywhere by the door","laundry basket overflowing","soft home lighting with shiny highlights","neighbors peeking through window"]
+  },
+  "walmart": {
+    type:"public",
+    chaos:["checkout conveyor belt, shopping carts, price signs, and customers watching","cash register lane with impulse-buy shelves and spilled snacks","cartoon motion lines everywhere","customers watching the drama"],
+    lighting:["bright indoor public lighting","bright grocery store lighting","rich saturated color palette","glossy polished finish"],
+    mom:["arms folded don't play with me look","calm but deadly stare","side-eye with raised eyebrow","pointing finger like a warning sign"],
+    dad:["holding a coffee like he has somewhere important to be","checking his phone nervously","claiming he has a quick errand","acting shocked he got caught"],
+    kid:["2-year-old smiling like they won","2-year-old holding a sippy cup like a trophy","baby pointing at dad like a witness","toddler holding a toy car and yelling go go"],
+    composition:["focus on all three characters","wide angle full-body composition","full-body vertical 9:16 framing","full scene visible no cropping"],
+    blocked:["family photos crooked on the wall","gym schedule on the wall","shoes everywhere by the door","laundry basket overflowing","soft home lighting with shiny highlights","warm morning sunlight","neighbors peeking through window"]
+  },
+  "target": {
+    type:"public",
+    chaos:["checkout conveyor belt, shopping carts, price signs, and customers watching","cash register lane with impulse-buy shelves and spilled snacks","cartoon motion lines everywhere","customers watching the drama"],
+    lighting:["bright indoor public lighting","bright grocery store lighting","rich saturated color palette","glossy polished finish"],
+    mom:["arms folded don't play with me look","calm but deadly stare","side-eye with raised eyebrow","pointing finger like a warning sign"],
+    dad:["holding a coffee like he has somewhere important to be","checking his phone nervously","claiming he has a quick errand","acting shocked he got caught"],
+    kid:["2-year-old smiling like they won","2-year-old holding a sippy cup like a trophy","baby pointing at dad like a witness","toddler holding a toy car and yelling go go"],
+    composition:["focus on all three characters","wide angle full-body composition","full-body vertical 9:16 framing","full scene visible no cropping"],
+    blocked:["family photos crooked on the wall","gym schedule on the wall","shoes everywhere by the door","laundry basket overflowing","soft home lighting with shiny highlights","warm morning sunlight","neighbors peeking through window"]
+  },
+  "checkout": {
+    type:"public",
+    chaos:["checkout conveyor belt, shopping carts, price signs, and customers watching","cash register lane with impulse-buy shelves and spilled snacks","cartoon motion lines everywhere","customers watching the drama"],
+    lighting:["bright indoor public lighting","bright grocery store lighting","rich saturated color palette","glossy polished finish"],
+    mom:["arms folded don't play with me look","calm but deadly stare","side-eye with raised eyebrow","pointing finger like a warning sign"],
+    dad:["holding a coffee like he has somewhere important to be","checking his phone nervously","claiming he has a quick errand","acting shocked he got caught"],
+    kid:["2-year-old smiling like they won","2-year-old holding a sippy cup like a trophy","baby pointing at dad like a witness","toddler holding a toy car and yelling go go"],
+    composition:["focus on all three characters","wide angle full-body composition","full-body vertical 9:16 framing","full scene visible no cropping"],
+    blocked:["family photos crooked on the wall","gym schedule on the wall","shoes everywhere by the door","laundry basket overflowing","soft home lighting with shiny highlights","warm morning sunlight","neighbors peeking through window"]
+  },
+  "doctor": {
+    type:"public",
+    chaos:["waiting room chairs, clinic posters, and people side-eyeing","baby snacks spilled nearby","cartoon motion lines everywhere","toys scattered on the floor"],
+    lighting:["bright clinic waiting room lighting","bright indoor public lighting","soft indoor public lighting","glossy polished finish"],
+    mom:["holding baby wipes like evidence","calm but deadly stare","standing firm like a courtroom judge","one eyebrow lifted in disbelief"],
+    dad:["walking out with headphones on","checking his phone nervously","pretending not to hear mom","acting shocked he got caught"],
+    kid:["2-month-old baby staring wide-eyed from a stroller","10-month-old baby pulling on dad's gym bag strap","toddler holding a sippy cup like a trophy","baby pointing at dad like a witness","kid pulling dad's shorts leg","baby yelling dada with snacks in hand"],
+    composition:["focus on all three characters","balanced family interaction scene","full scene visible no cropping"],
+    blocked:["family photos crooked on the wall","gym schedule on the wall","shoes everywhere by the door","laundry basket overflowing","warm morning sunlight","soft home lighting with shiny highlights"]
+  },
+  "daycare": {
+    type:"public",
+    chaos:["cubies, tiny chairs, daycare posters, and scattered toys","baby snacks spilled nearby","toys scattered on the floor","cartoon motion lines everywhere"],
+    lighting:["bright daycare classroom lighting","bright indoor public lighting","bright vibrant colors","glossy polished finish"],
+    mom:["standing firm like a courtroom judge","calm but deadly stare","arms folded don't play with me look","pointing finger like a warning sign"],
+    dad:["acting shocked he got caught","claiming he has a quick errand","checking his phone nervously","pretending not to hear mom"],
+    kid:["newborn in a stroller with tiny socks peeking out","1-year-old sitting on the diaper bag like luggage","kid packed and ready like a road trip","baby pointing at dad like a witness","toddler smiling like they won","toddler dragging a stuffed animal and bottle"],
+    composition:["clear readable speech bubble","balanced family interaction scene","focus on all three characters","full scene visible no cropping"],
+    blocked:["family photos crooked on the wall","gym schedule on the wall","shoes everywhere by the door","laundry basket overflowing","soft home lighting with shiny highlights"]
+  },
+  "barbershop": {
+    type:"public",
+    chaos:["barber chairs, mirrors, clippers, and customers watching","cartoon motion lines everywhere","baby snacks spilled nearby"],
+    lighting:["bright barbershop lighting","high contrast comic lighting","glossy polished finish","rich saturated color palette"],
+    mom:["pointing finger like a warning sign","mom face says try me","side-eye with raised eyebrow","hands on hips furious"],
+    dad:["heading to the barbershop","acting shocked he got caught","pretending not to hear mom","checking his phone nervously"],
+    kid:["9-month-old baby crawling after dad holding a sock","11-month-old baby standing wobbly while grabbing dad's pant leg","kid pulling dad's shorts leg","baby pointing at dad like a witness","toddler holding a sippy cup like a trophy","baby yelling dada with snacks in hand"],
+    composition:["wide angle full-body composition","dynamic motion energy","focus on all three characters","full-body vertical 9:16 framing"],
+    blocked:["family photos crooked on the wall","gym schedule on the wall","laundry basket overflowing","soft home lighting with shiny highlights"]
+  },
+  "driveway": {
+    type:"outdoor",
+    chaos:["neighbors peeking through window","cars, sidewalk details, open driveway space, neighbors watching, and playful motion lines","dog watching the drama","cartoon motion lines everywhere"],
+    lighting:["bright outdoor daylight","warm morning sunlight","cinematic cartoon lighting","high contrast comic lighting"],
+    mom:["hands on hips furious","arms folded don't play with me look","pointing finger like a warning sign","one eyebrow lifted in disbelief"],
+    dad:["going fishing with the boys","pretending he forgot something outside","tiptoeing toward freedom","halfway out the door looking guilty"],
+    kid:["newborn in dad's arms looking peaceful while dad looks trapped","3-month-old baby in a front carrier strapped to dad","1-year-old dragging a tiny blanket behind dad","toddler dragging a stuffed animal and bottle","2-year-old dragging a diaper bag behind dad","baby crawling toward the door determined","toddler chasing dad with tiny shoes"],
+    composition:["wide angle full-body composition","dynamic motion energy","full scene visible no cropping","Etsy thumbnail friendly composition"],
+    blocked:["family photos crooked on the wall","laundry basket overflowing","soft home lighting with shiny highlights"]
+  },
+  "restaurant": {
+    type:"public",
+    chaos:["restaurant booth, menus, spilled fries, and diners watching","baby snacks spilled nearby","sippy cup rolling across the floor","cartoon motion lines everywhere"],
+    lighting:["warm restaurant lighting","bright indoor public lighting","glossy polished finish","rich saturated color palette"],
+    mom:["arms folded don't play with me look","side-eye with raised eyebrow","calm but deadly stare","fake smile with rage underneath"],
+    dad:["pretending he forgot something outside","claiming he has a quick errand","tiptoeing toward freedom","checking his phone nervously"],
+    kid:["tiny newborn wrapped up while the diaper bag sits beside dad","6-month-old baby sitting up with a bottle like a tiny boss","18-month-old chasing dad with tiny shoes","kid throwing toys into the diaper bag","baby yelling dada with snacks in hand","toddler holding a sippy cup like a trophy","baby pointing at dad like a witness"],
+    composition:["balanced family interaction scene","focus on all three characters","full scene visible no cropping"],
+    blocked:["family photos crooked on the wall","gym schedule on the wall","laundry basket overflowing","shoes everywhere by the door","soft home lighting with shiny highlights"]
+  },
+  "movie theater": {
+    type:"public",
+    chaos:["movie posters, concession counter, popcorn buckets, velvet ropes, and people watching","ticket kiosk, theater signs, snack counter, and customers reacting","cartoon motion lines everywhere"],
+    lighting:["bright indoor public lighting","neon comic glow","cinematic cartoon lighting","glossy polished finish"],
+    mom:["holding car keys like proof","arms folded don't play with me look","side-eye with raised eyebrow","calm but deadly stare"],
+    dad:["backing out the door slowly","checking his phone nervously","claiming he has a quick errand","acting shocked he got caught"],
+    kid:["7-month-old crawling toward dad's sneakers","8-month-old reaching for dad's shoe","10-month-old pulling on dad's gym bag strap","11-month-old standing wobbly while grabbing dad's pant leg"],
+    composition:["Etsy thumbnail friendly composition","focus on all three characters","wide angle full-body composition","full scene visible no cropping"],
+    blocked:["barber chairs, mirrors, clippers, and customers watching","family photos crooked on the wall","gym schedule on the wall","laundry basket overflowing","shoes everywhere by the door","soft home lighting with shiny highlights","warm morning sunlight","neighbors peeking through window"]
+  },
+  "mall": {
+    type:"public",
+    chaos:["mall shoppers, storefront signs, stroller traffic, and spilled snacks","baby snacks spilled nearby","cartoon motion lines everywhere","customers watching the drama"],
+    lighting:["bright mall lighting","bright indoor public lighting","neon comic glow","glossy polished finish"],
+    mom:["side-eye with raised eyebrow","calm but deadly stare","pointing finger like a warning sign","arms folded don't play with me look"],
+    dad:["claiming he has a quick errand","checking his phone nervously","pretending not to hear mom","acting shocked he got caught"],
+    kid:["8-month-old baby reaching for dad's shoe","12-month-old baby toddling after dad with one shoe on","toddler chasing dad with tiny shoes","kid holding dad's keys hostage","baby pointing at dad like a witness","toddler smiling like they won"],
+    composition:["wide angle full-body composition","focus on all three characters","dynamic motion energy"],
+    blocked:["family photos crooked on the wall","gym schedule on the wall","laundry basket overflowing","shoes everywhere by the door","soft home lighting with shiny highlights"]
+  },
+  "school": {
+    type:"public",
+    chaos:["school pickup signs, backpacks, parents watching, and kids in the background","toys scattered on the floor","cartoon motion lines everywhere","baby snacks spilled nearby"],
+    lighting:["bright school hallway lighting","bright outdoor daylight","bright indoor public lighting","glossy polished finish"],
+    mom:["arms folded don't play with me look","side-eye with raised eyebrow","pointing finger like a warning sign","calm but deadly stare"],
+    dad:["claiming he has a quick errand","pretending not to hear mom","checking his phone nervously","acting shocked he got caught"],
+    kid:["1-year-old sitting on the diaper bag like luggage","2-year-old packed and ready like a road trip","kid packed and ready like a road trip","kid holding dad's keys hostage","baby pointing at dad like a witness","toddler smiling like they won"],
+    composition:["wide angle full-body composition","focus on all three characters","full scene visible no cropping"],
+    blocked:["family photos crooked on the wall","gym schedule on the wall","laundry basket overflowing","shoes everywhere by the door","soft home lighting with shiny highlights"]
+  }
+};
+
+function sceneAwareCustomOptions(key, scene){
+  const rule = findSceneRule(scene);
+  if(!rule) return [];
+  const map = {
+    "Background Chaos":"chaos",
+    "Lighting & Color":"lighting",
+    "Mom's Attitude":"mom",
+    "Dad's Excuse / Action":"dad",
+    "Kid's Funny Action":"kid",
+    "Camera & Composition":"composition"
+  };
+  return rule[map[key]] || [];
+}
+
+function getSceneType(scene){
+  const s = (scene || "").toLowerCase();
+  if(s.includes("driveway") || s.includes("front yard") || s.includes("back porch") || s.includes("parking lot") || s.includes("garage") || s.includes("car wash") || s.includes("airport drop-off") || s.includes("gas station") || s.includes("sports practice") || s.includes("park playground") || s.includes("family cookout")){
+    return "outdoor";
+  }
+  if(s.includes("church") || s.includes("daycare") || s.includes("doctor") || s.includes("urgent care") || s.includes("grocery") || s.includes("target") || s.includes("walmart") || s.includes("store") || s.includes("mall") || s.includes("restaurant") || s.includes("coffee") || s.includes("movie") || s.includes("barbershop") || s.includes("beauty salon") || s.includes("hotel") || s.includes("photo studio") || s.includes("community center") || s.includes("school") || s.includes("baby shower") || s.includes("family reunion") || s.includes("laundromat")){
+    return "public";
+  }
+  return "home";
+}
+
+function fallbackSceneRule(scene){
+  const s = (scene || "").toLowerCase();
+  const type = getSceneType(scene);
+  const homeBlocked = [];
+  const publicBlocked = ["family photos crooked on the wall","gym schedule on the wall","shoes everywhere by the door","laundry basket overflowing","soft home lighting with shiny highlights","warm morning sunlight","neighbors peeking through window"];
+  const outdoorBlocked = ["family photos crooked on the wall","gym schedule on the wall","shoes everywhere by the door","laundry basket overflowing","soft home lighting with shiny highlights","bright indoor public lighting","bright daycare classroom lighting","bright clinic waiting room lighting","bright grocery store lighting","bright barbershop lighting","soft indoor church lobby lighting"];
+  if(s.includes("car seat")){
+    return {type:"outdoor", chaos:["cars, sidewalk details, open driveway space, neighbors watching, and playful motion lines","baby snacks spilled nearby","cartoon motion lines everywhere"], lighting:["bright outdoor daylight","warm morning sunlight","glossy polished finish"], mom:["hands on hips furious","holding car keys like proof","holding diaper bag out like a court exhibit","calm but deadly stare"], dad:["checking his phone nervously","acting shocked he got caught","claiming he only needs ten minutes","backing out the door slowly"], kid:["1-month-old baby in a car seat carrier near dad's feet","5-month-old baby sitting in a carrier with a pacifier","toddler smiling like they won","2-year-old packed and ready like a road trip"], composition:["wide angle full-body composition","focus on all three characters","full scene visible no cropping"], blocked:outdoorBlocked};
+  }
+  if(s.includes("community center")){
+    return {type:"public", chaos:["folding chairs and welcome table in background","customers watching the drama","cartoon motion lines everywhere","baby snacks spilled nearby"], lighting:["bright indoor public lighting","soft indoor public lighting","glossy polished finish","bright vibrant colors"], mom:["standing firm like a courtroom judge","calm but deadly stare","arms folded don't play with me look","pointing finger like a warning sign"], dad:["claiming he has a quick errand","pretending not to hear mom","checking his phone nervously","acting shocked he got caught"], kid:["1-year-old sitting on the diaper bag like luggage","2-year-old packed and ready like a road trip","baby pointing at dad like a witness","toddler smiling like they won"], composition:["balanced family interaction scene","focus on all three characters","full scene visible no cropping"], blocked:publicBlocked};
+  }
+  if(s.includes("hotel")){
+    return {type:"public", chaos:["customers watching the drama","cartoon motion lines everywhere","baby snacks spilled nearby"], lighting:["bright indoor public lighting","soft indoor public lighting","glossy polished finish"], mom:["calm but deadly stare","arms folded don't play with me look","checking her watch with attitude","side-eye with raised eyebrow"], dad:["claiming he has a quick errand","checking his phone nervously","backing out the door slowly","acting shocked he got caught"], kid:["toddler pulling the diaper bag like a suitcase","1-year-old sitting on the diaper bag like luggage","2-year-old packed and ready like a road trip","baby pointing at dad like a witness"], composition:["wide angle full-body composition","focus on all three characters","full scene visible no cropping"], blocked:publicBlocked};
+  }
+  if(s.includes("photo studio")){
+    return {type:"public", chaos:["customers watching the drama","cartoon motion lines everywhere","baby snacks spilled nearby"], lighting:["bright indoor public lighting","soft indoor public lighting","glossy polished finish"], mom:["giving the look that cancels plans","calm but deadly stare","arms folded don't play with me look","holding car keys like proof"], dad:["checking his phone nervously","claiming he has a quick errand","acting shocked he got caught","pretending not to hear mom"], kid:["toddler smiling like they won","baby pointing at dad like a witness","kid holding dad's keys hostage","2-year-old packed and ready like a road trip"], composition:["Etsy thumbnail friendly composition","balanced family interaction scene","focus on all three characters"], blocked:publicBlocked};
+  }
+  if(type === "public"){
+    return {type:"public", chaos:["customers watching the drama","cartoon motion lines everywhere","baby snacks spilled nearby","folding chairs and welcome table in background"], lighting:["bright indoor public lighting","soft indoor public lighting","glossy polished finish","bright vibrant colors"], mom:["calm but deadly stare","arms folded don't play with me look","side-eye with raised eyebrow","pointing finger like a warning sign"], dad:["claiming he has a quick errand","pretending not to hear mom","checking his phone nervously","acting shocked he got caught"], kid:["baby pointing at dad like a witness","toddler smiling like they won","1-year-old sitting on the diaper bag like luggage","2-year-old packed and ready like a road trip"], composition:["focus on all three characters","balanced family interaction scene","full scene visible no cropping"], blocked:publicBlocked};
+  }
+  if(type === "outdoor"){
+    return {type:"outdoor", chaos:["cars, sidewalk details, open driveway space, neighbors watching, and playful motion lines","neighbors peeking through window","cartoon motion lines everywhere","baby snacks spilled nearby"], lighting:["bright outdoor daylight","warm morning sunlight","cinematic cartoon lighting","glossy polished finish"], mom:["hands on hips furious","arms folded don't play with me look","pointing finger like a warning sign","calm but deadly stare"], dad:["backing out the door slowly","claiming he has a quick errand","checking his phone nervously","acting shocked he got caught"], kid:["toddler pulling the diaper bag like a suitcase","baby pointing at dad like a witness","2-year-old dragging a diaper bag behind dad","1-year-old sitting on the diaper bag like luggage"], composition:["wide angle full-body composition","dynamic motion energy","full scene visible no cropping"], blocked:outdoorBlocked};
+  }
+  return {type:"home", chaos:["toys scattered on the floor","sippy cup rolling across the rug","shoes everywhere by the door","messy but funny family home energy"], lighting:["soft home lighting with shiny highlights","warm morning sunlight","glossy polished finish","bright vibrant colors"], mom:["arms folded don't play with me look","hands on hips furious","calm but deadly stare","side-eye with raised eyebrow"], dad:["trying to leave for the gym","halfway out the door looking guilty","tiptoeing toward freedom","claiming he has a quick errand"], kid:["toddler pulling the diaper bag like a suitcase","2-year-old dragging a diaper bag behind dad","baby crawling toward the door determined","kid holding dad's keys hostage"], composition:["full scene visible no cropping","focus on all three characters","wide angle full-body composition"], blocked:homeBlocked};
+}
+
+function isBlockedByScene(value, scene){
+  const rule = findSceneRule(scene);
+  if(!rule || !value) return false;
+  return rule.blocked.some(blocked => value.toLowerCase().includes(blocked.toLowerCase()) || blocked.toLowerCase().includes(value.toLowerCase()));
+}
+
+function findSceneRule(scene){
+  const s = (scene || "").toLowerCase();
+  const entries = Object.entries(smartSceneMatches).sort((a,b)=>b[0].length-a[0].length);
+  return entries.find(([key]) => s.includes(key))?.[1] || fallbackSceneRule(scene);
+}
+
+function pickRandom(arr){
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+
+const randomBags = JSON.parse(localStorage.getItem("comicRandomBags") || "{}");
+
+function saveRandomBags(){
+  localStorage.setItem("comicRandomBags", JSON.stringify(randomBags));
+}
+
+function shuffledCopy(arr){
+  const copy = [...arr];
+  for(let i = copy.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
+function bagKey(key, scene){
+  if(key === "Background Chaos" || key === "Lighting & Color" || key === "Mom's Attitude" || key === "Dad's Excuse / Action" || key === "Kid's Funny Action" || key === "Camera & Composition"){
+    return key + "::" + (scene || "global").toLowerCase();
+  }
+  return key + "::global";
+}
+
+function nextNoRepeatOption(key, options, scene){
+  const clean = [...new Set(options.filter(x => x && x !== "none"))];
+  if(!clean.length) return "none";
+
+  const bKey = bagKey(key, scene);
+  if(!randomBags[bKey] || !Array.isArray(randomBags[bKey]) || randomBags[bKey].length === 0){
+    randomBags[bKey] = shuffledCopy(clean);
+  }
+
+  // Remove stale choices that no longer exist for this scene/category.
+  randomBags[bKey] = randomBags[bKey].filter(x => clean.includes(x));
+  if(randomBags[bKey].length === 0){
+    randomBags[bKey] = shuffledCopy(clean);
+  }
+
+  const choice = randomBags[bKey].shift();
+  saveRandomBags();
+  return choice;
+}
+
+function resetRandomizerMemory(){
+  Object.keys(randomBags).forEach(k => delete randomBags[k]);
+  saveRandomBags();
+  toast("Randomizer memory reset");
+}
+
+
+function randomOptionFor(key, scene){
+  const opts = data[key].filter(x => x !== "none" && x !== "");
+  const smart = sceneAwareCustomOptions(key, scene);
+  if(smart.length) return nextNoRepeatOption(key, smart, scene);
+
+  const filtered = opts.filter(x => !isBlockedByScene(x, scene));
+  return nextNoRepeatOption(key, filtered.length ? filtered : opts, scene);
+}
+
+
+function isNewbornOrTinyInfant(kidAction){
+  const k = (kidAction || "").toLowerCase();
+  return k.includes("newborn") || k.includes("1-month") || k.includes("2-month") || k.includes("3-month") || k.includes("4-month") || k.includes("5-month") || k.includes("6-month") || k.includes("7-month") || k.includes("8-month") || k.includes("9-month") || k.includes("10-month") || k.includes("11-month");
+}
+
+function getScenarioBubbleSet(scene, dadAction, kidAction){
+  const combined = `${scene} ${dadAction} ${kidAction}`.toLowerCase();
+
+  if(combined.includes("gym")){
+    return {
+      mom:["Not today, gym hero.","Your baby wants gains too.","He heard gym and packed snacks.","Daddy duty starts at the door."],
+      dad:["The gym closes soon.","I was stretching, not leaving.","Can I at least change shoes?","I was only going for one hour."],
+      kid:["Me go gym!","My bag ready!","Dada, wait!","I ready!"]
+    };
+  }
+
+  if(combined.includes("church")){
+    return {
+      mom:["Don’t make me use my church voice.","You made him, you take him.","Your little roommate is coming too.","Absolutely not, sir."],
+      dad:["I plead the fifth.","I thought he was staying with you.","Can we talk about this later?","I already changed one diaper today."],
+      kid:["Mama said!","Dada, wait!","I go too!","Snack please!"]
+    };
+  }
+
+  if(combined.includes("barbershop")){
+    return {
+      mom:["Take him with you then.","You forgot your plus-one.","Your escape route has a toddler toll.","That baby has your whole face."],
+      dad:["I was going to be quick quick.","The boys are waiting on me.","This is not what it looks like.","I can explain."],
+      kid:["Up, Dada!","Me too!","I got shoes!","Dada mine!"]
+    };
+  }
+
+  if(combined.includes("fishing")){
+    return {
+      mom:["Where you going without your shadow?","You leaving? Wonderful. Take him.","Since you got plans, so does he.","That baby said road trip."],
+      dad:["He said he wanted to come.","I promise I was coming back.","I was checking the weather.","The boys are waiting on me."],
+      kid:["Car ride!","I coming!","I got plans!","Go go!"]
+    };
+  }
+
+  if(combined.includes("game night") || combined.includes("man cave")){
+    return {
+      mom:["Don’t run now, Daddy Daycare.","Your break got canceled.","The baby already clocked in.","You tried it, and failed."],
+      dad:["I thought he was asleep.","I just need fresh air.","I’m being framed by a toddler.","I was only going for one hour."],
+      kid:["Daddy daycare!","No leave me!","Dada, wait!","I boss baby!"]
+    };
+  }
+
+  if(combined.includes("grocery") || combined.includes("store") || combined.includes("target") || combined.includes("walmart")){
+    return {
+      mom:["Sir, your responsibility is following you.","You forgot your tiny manager.","Go ahead and buckle him in.","The stroller is ready, Daddy."],
+      dad:["I was just checking the door.","I didn’t see the diaper bag.","I thought nap time counted.","I can explain."],
+      kid:["Snack please!","I got juice!","Keys please!","I bring snacks!"]
+    };
+  }
+
+  if(combined.includes("doctor") || combined.includes("urgent care")){
+    return {
+      mom:["The diaper bag has spoken.","I know you saw that diaper bag.","Your little roommate is coming too.","You forgot your plus-one."],
+      dad:["I thought he was staying with you.","I already changed one diaper today.","Can we talk about this later?","I can explain."],
+      kid:["Bottle!","Snack please!","Pick me!","Dada hold me!"]
+    };
+  }
+
+  if(combined.includes("daycare")){
+    return {
+      mom:["The baby packed before you did.","Daddy duty starts at the door.","You forgot your tiny manager.","That baby said road trip."],
+      dad:["Why is he already packed?","He packed himself, honestly.","This gym bag is not evidence.","I thought he was staying with you."],
+      kid:["I packed it!","My bag ready!","Mama said go!","I ready ready!"]
+    };
+  }
+
+  if(combined.includes("restaurant") || combined.includes("coffee")){
+    return {
+      mom:["Oh, so you thought you were leaving alone?","Your escape route has a toddler toll.","Your little roommate is coming too.","Take him with you then."],
+      dad:["I was going to be quick quick.","I promise I was coming back.","I thought nap time counted.","This is not what it looks like."],
+      kid:["Snack please!","I got juice!","Me too!","No bye!"]
+    };
+  }
+
+  if(combined.includes("newborn") || combined.includes("1-month") || combined.includes("2-month") || combined.includes("3-month") || combined.includes("4-month") || combined.includes("5-month") || combined.includes("6-month") || combined.includes("7-month") || combined.includes("8-month") || combined.includes("9-month") || combined.includes("10-month") || combined.includes("11-month")){
+    return {
+      mom:["That is YOUR baby.","The stroller is ready, Daddy.","You forgot your plus-one.","Daddy duty starts at the door."],
+      dad:["I already changed one diaper today.","Can I at least change shoes?","I thought he was asleep.","I can explain."],
+      kid:["Thought: I just got here and he already trying to diss me.","Thought: Sir, I am brand new here.","Thought: I have been alive for five minutes and he already leaving.","Thought: This man better grab my diaper bag.","Thought: I cannot even hold my head up and I know he wrong.","Thought: Daddy tried it.","Thought: I need milk, not excuses.","Thought: So this is the outside drama?","Thought: I was born into nonsense.","Thought: Somebody tell Dad I travel with equipment."]
+    };
+  }
+
+  if(combined.includes("diaper bag") || combined.includes("wipes") || combined.includes("stroller")){
+    return {
+      mom:["The diaper bag has spoken.","I know you saw that diaper bag.","The stroller is ready, Daddy.","That baby said road trip."],
+      dad:["I didn’t see the diaper bag.","Babe, I packed snacks.","He packed himself, honestly.","I can explain."],
+      kid:["My bag ready!","I packed it!","Bag mine!","I ready!"]
+    };
+  }
+
+  return {
+    mom:["That is YOUR baby.","Take him with you then.","You made him, you take him.","Your little roommate is coming too.","You forgot your plus-one."],
+    dad:["I can explain.","I thought he was staying with you.","I swear this was not the plan.","Can we talk about this later?"],
+    kid:["Dada, wait!","I go too!","Me too!","I ready!","Dada mine!"]
+  };
+}
+
+function setScenarioSpeechBubbles(){
+  const scene = getVal("Scene & Setting");
+  const dadAction = getVal("Dad's Excuse / Action");
+  const kidAction = getVal("Kid's Funny Action");
+  const set = getScenarioBubbleSet(scene, dadAction, kidAction);
+
+  const pairs = [
+    ["Mom Speech Bubble", set.mom],
+    ["Dad Speech Bubble", set.dad],
+    ["Kid Speech Bubble", set.kid]
+  ];
+
+  pairs.forEach(([key, list])=>{
+    const el = document.getElementById(id(key));
+    if(!el || locks[id(key)]) return;
+    let available = list.filter(v => Array.from(el.options).some(o => o.value === v));
+    if(key === "Kid Speech Bubble"){
+      const ageAllowed = ageMatchedKidBubbles(kidAction);
+      if(isNewbornOrTinyInfant(kidAction)){
+        available = ageAllowed;
+      } else {
+        available = available.filter(x => ageAllowed.includes(x));
+        if(!available.length) available = ageAllowed;
+      }
+    }
+    el.value = nextNoRepeatOption(key, available.length ? available : data[key].filter(x => x !== "none" && x !== ""), scene);
+  });
+}
+
+const presets = [
+  {name:"🔥 Doorway Dad Got Caught", set:{
+    "Scene & Setting":"front door entryway",
+    "Family Ethnicity / Heritage":"African American family",
+    "Family Skin Color":"rich dark brown skin tones",
+    "Mom's Attitude":"standing in front of the exit like security",
+    "Dad's Excuse / Action":"trying to leave for the gym",
+    "Kid's Funny Action":"2-year-old dragging a diaper bag behind dad",
+    "Mom Speech Bubble":"That is YOUR baby.",
+    "Dad Speech Bubble":"I can explain.",
+    "Kid Speech Bubble":"I go too!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"glossy 3D animated cartoon",
+    "Expression Level":"wide-eyed guilty dad face",
+    "Background Chaos":"shoes everywhere by the door",
+    "Lighting & Color":"warm morning sunlight",
+    "Camera & Composition":"front door centered composition",
+    "Output Quality":"clean high-resolution ultra-detailed"
+  }},
+  {name:"💪 Gym Bag Evidence", set:{
+    "Scene & Setting":"front door entryway",
+    "Family Ethnicity / Heritage":"Black Southern family",
+    "Family Skin Color":"deep espresso skin tones",
+    "Mom's Attitude":"holding the diaper bag strap like a leash",
+    "Dad's Excuse / Action":"holding gym bag like evidence",
+    "Kid's Funny Action":"toddler sitting on dad's shoes so he cannot leave",
+    "Mom Speech Bubble":"Not today, gym hero.",
+    "Dad Speech Bubble":"The gym closes soon.",
+    "Kid Speech Bubble":"Me go gym!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"high-definition animated sitcom style",
+    "Expression Level":"comedic panic faces",
+    "Background Chaos":"gym schedule on the wall",
+    "Lighting & Color":"soft home lighting with shiny highlights",
+    "Camera & Composition":"dynamic motion energy",
+    "Output Quality":"premium glossy HD finish"
+  }},
+  {name:"🎮 Game Night Got Cancelled", set:{
+    "Scene & Setting":"living room showdown",
+    "Family Ethnicity / Heritage":"mixed-race family",
+    "Family Skin Color":"mixed skin tones across family members",
+    "Mom's Attitude":"side-eye with raised eyebrow",
+    "Dad's Excuse / Action":"sneaking out for game night",
+    "Kid's Funny Action":"kid holding dad's keys hostage",
+    "Mom Speech Bubble":"Don’t run now, Daddy Daycare.",
+    "Dad Speech Bubble":"I thought he was asleep.",
+    "Kid Speech Bubble":"Dada, wait!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"funny comic strip vibe",
+    "Expression Level":"comedic panic faces",
+    "Background Chaos":"sticky notes with dad's excuses",
+    "Lighting & Color":"neon comic glow",
+    "Camera & Composition":"comic panel layout",
+    "Output Quality":"sharp readable text bubble"
+  }},
+  {name:"🎣 Fishing Trip Witness", set:{
+    "Scene & Setting":"driveway escape",
+    "Family Ethnicity / Heritage":"Black Caribbean family",
+    "Family Skin Color":"deep espresso skin tones",
+    "Mom's Attitude":"hands on hips furious",
+    "Dad's Excuse / Action":"going fishing with the boys",
+    "Kid's Funny Action":"toddler dragging a stuffed animal and bottle",
+    "Mom Speech Bubble":"Where you going without your shadow?",
+    "Dad Speech Bubble":"I was checking the weather.",
+    "Kid Speech Bubble":"Car ride!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"exaggerated caricature cartoon",
+    "Expression Level":"over-the-top dramatic faces",
+    "Background Chaos":"cars, sidewalk details, open driveway space, neighbors watching, and playful motion lines",
+    "Lighting & Color":"bright outdoor daylight",
+    "Camera & Composition":"wide angle full-body composition",
+    "Output Quality":"commercial-quality comic art"
+  }},
+  {name:"🛒 Grocery Aisle Accountability", set:{
+    "Scene & Setting":"grocery store aisle",
+    "Family Ethnicity / Heritage":"Latina family",
+    "Family Skin Color":"golden brown skin tones",
+    "Mom's Attitude":"calm but deadly stare",
+    "Dad's Excuse / Action":"claiming he has a quick errand",
+    "Kid's Funny Action":"baby pointing at dad like a witness",
+    "Mom Speech Bubble":"Sir, your responsibility is following you.",
+    "Dad Speech Bubble":"I was just checking the door.",
+    "Kid Speech Bubble":"Snack please!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"bold webcomic style",
+    "Expression Level":"shocked reaction faces",
+    "Background Chaos":"shopping carts, aisle signs, and spilled snacks",
+    "Lighting & Color":"bright grocery store lighting",
+    "Camera & Composition":"focus on all three characters",
+    "Output Quality":"crisp outlines and polished highlights"
+  }},
+  {name:"✂️ Barbershop Plus-One", set:{
+    "Scene & Setting":"barbershop parking lot",
+    "Family Ethnicity / Heritage":"African American family",
+    "Family Skin Color":"warm mahogany skin tones",
+    "Mom's Attitude":"pointing finger like a warning sign",
+    "Dad's Excuse / Action":"heading to the barbershop",
+    "Kid's Funny Action":"kid pulling dad's shorts leg",
+    "Mom Speech Bubble":"Take him with you then.",
+    "Dad Speech Bubble":"I was going to be quick quick.",
+    "Kid Speech Bubble":"Up, Dada!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"urban family comic style",
+    "Expression Level":"mom face says try me",
+    "Background Chaos":"barber chairs, mirrors, clippers, and customers watching",
+    "Lighting & Color":"bright barbershop lighting",
+    "Camera & Composition":"full-body vertical 9:16 framing",
+    "Output Quality":"no cropped heads or feet"
+  }},
+  {name:"⛪ Church Voice Warning", set:{
+    "Scene & Setting":"church lobby",
+    "Family Ethnicity / Heritage":"Black Southern family",
+    "Family Skin Color":"rich dark brown skin tones",
+    "Mom's Attitude":"fake polite church smile with hidden rage",
+    "Dad's Excuse / Action":"pretending not to hear mom",
+    "Kid's Funny Action":"baby yelling dada with snacks in hand",
+    "Mom Speech Bubble":"Don’t make me use my church voice.",
+    "Dad Speech Bubble":"I plead the fifth.",
+    "Kid Speech Bubble":"Mama said!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"storybook cartoon comedy",
+    "Expression Level":"slightly dramatic expressions",
+    "Background Chaos":"ushers and church ladies quietly watching",
+    "Lighting & Color":"soft indoor church lobby lighting",
+    "Camera & Composition":"balanced family interaction scene",
+    "Output Quality":"fully finished viral social media image"
+  }},
+  {name:"🎒 Daycare Bag Plot Twist", set:{
+    "Scene & Setting":"daycare drop-off",
+    "Family Ethnicity / Heritage":"multicultural blended family",
+    "Family Skin Color":"mixed skin tones across family members",
+    "Mom's Attitude":"standing firm like a courtroom judge",
+    "Dad's Excuse / Action":"acting shocked he got caught",
+    "Kid's Funny Action":"1-year-old sitting on the diaper bag like luggage",
+    "Mom Speech Bubble":"The baby packed before you did.",
+    "Dad Speech Bubble":"Why is he already packed?",
+    "Kid Speech Bubble":"I packed it!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"playful meme cartoon style",
+    "Expression Level":"baby thrilled and determined",
+    "Background Chaos":"cubies, tiny chairs, daycare posters, and scattered toys",
+    "Lighting & Color":"bright daycare classroom lighting",
+    "Camera & Composition":"clear readable speech bubble",
+    "Output Quality":"no blurry faces"
+  }},
+  {name:"🚗 Car Seat Negotiations", set:{
+    "Scene & Setting":"car seat struggle",
+    "Family Ethnicity / Heritage":"Afro-Latina family",
+    "Family Skin Color":"caramel brown skin tones",
+    "Mom's Attitude":"mouth open mid-scolding",
+    "Dad's Excuse / Action":"checking his phone nervously",
+    "Kid's Funny Action":"toddler smiling like they won",
+    "Mom Speech Bubble":"Go ahead and buckle him in.",
+    "Dad Speech Bubble":"I forgot my water bottle.",
+    "Kid Speech Bubble":"Dada mine!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"premium glossy sticker-comic style",
+    "Expression Level":"chaotic sitcom expressions",
+    "Background Chaos":"cars, sidewalk details, open driveway space, neighbors watching, and playful motion lines",
+    "Lighting & Color":"bright outdoor daylight",
+    "Camera & Composition":"wide angle full-body composition",
+    "Output Quality":"no extra fingers"
+  }},
+  {name:"🎉 Birthday Party Escape Fail", set:{
+    "Scene & Setting":"birthday party",
+    "Family Ethnicity / Heritage":"Mexican American family",
+    "Family Skin Color":"warm tan skin tones",
+    "Mom's Attitude":"dramatic mom glare",
+    "Dad's Excuse / Action":"tiptoeing toward freedom",
+    "Kid's Funny Action":"kid throwing toys into the diaper bag",
+    "Mom Speech Bubble":"Oh, so you thought you were leaving alone?",
+    "Dad Speech Bubble":"I’m not running, I’m walking fast.",
+    "Kid Speech Bubble":"I ready!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"Saturday morning cartoon chaos",
+    "Expression Level":"playful exaggerated features",
+    "Background Chaos":"messy but funny family home energy",
+    "Lighting & Color":"bold colorful family sitcom mood",
+    "Camera & Composition":"Etsy thumbnail friendly composition",
+    "Output Quality":"premium glossy HD finish"
+  }},
+  {name:"🍗 Cookout Dad Detour", set:{
+    "Scene & Setting":"family cookout",
+    "Family Ethnicity / Heritage":"Black Caribbean family",
+    "Family Skin Color":"mom deep brown, dad medium brown, child golden brown",
+    "Mom's Attitude":"one eyebrow lifted in disbelief",
+    "Dad's Excuse / Action":"pretending he forgot something outside",
+    "Kid's Funny Action":"baby crawling toward the door determined",
+    "Mom Speech Bubble":"The diaper bag has spoken.",
+    "Dad Speech Bubble":"Babe, I packed snacks.",
+    "Kid Speech Bubble":"Car ride!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"vibrant magazine comic panel",
+    "Expression Level":"big expressive cartoon eyes",
+    "Background Chaos":"dog watching the drama",
+    "Lighting & Color":"cinematic cartoon lighting",
+    "Camera & Composition":"wide angle full-body composition",
+    "Output Quality":"commercial-quality comic art"
+  }},
+  {name:"🏥 Waiting Room Walkout", set:{
+    "Scene & Setting":"doctor appointment waiting room",
+    "Family Ethnicity / Heritage":"ambiguous diverse family",
+    "Family Skin Color":"medium olive skin tones",
+    "Mom's Attitude":"holding baby wipes like evidence",
+    "Dad's Excuse / Action":"walking out with headphones on",
+    "Kid's Funny Action":"toddler holding a sippy cup like a trophy",
+    "Mom Speech Bubble":"I know you saw that diaper bag.",
+    "Dad Speech Bubble":"I thought he was staying with you.",
+    "Kid Speech Bubble":"Pick me!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"clean vector comic style",
+    "Expression Level":"wide-eyed guilty dad face",
+    "Background Chaos":"waiting room chairs, clinic posters, and people side-eyeing",
+    "Lighting & Color":"bright clinic waiting room lighting",
+    "Camera & Composition":"focus on all three characters",
+    "Output Quality":"clean high-resolution ultra-detailed"
+  }},
+  {name:"👶 Baby Shower Reality Check", set:{
+    "Scene & Setting":"baby shower",
+    "Family Ethnicity / Heritage":"African American family",
+    "Family Skin Color":"mom caramel brown, dad deep espresso, child honey brown",
+    "Mom's Attitude":"holding the stroller handle like a warning",
+    "Dad's Excuse / Action":"claiming he only needs ten minutes",
+    "Kid's Funny Action":"2-year-old packed and ready like a road trip",
+    "Mom Speech Bubble":"Since you got plans, so does he.",
+    "Dad Speech Bubble":"I was going to be quick quick.",
+    "Kid Speech Bubble":"My bag ready!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"glossy 3D animated cartoon",
+    "Expression Level":"chaotic sitcom expressions",
+    "Background Chaos":"folding chairs and welcome table in background",
+    "Lighting & Color":"bright indoor public lighting",
+    "Camera & Composition":"full-body vertical 9:16 framing",
+    "Output Quality":"fully finished viral social media image"
+  }},
+  {name:"🎬 Movie Lobby Tiny Witness", set:{
+    "Scene & Setting":"movie theater lobby",
+    "Family Ethnicity / Heritage":"Latina family",
+    "Family Skin Color":"warm mahogany skin tones",
+    "Mom's Attitude":"holding car keys like proof",
+    "Dad's Excuse / Action":"backing out the door slowly",
+    "Kid's Funny Action":"7-month-old crawling toward dad's sneakers",
+    "Mom Speech Bubble":"Your little roommate is coming too.",
+    "Dad Speech Bubble":"I promise I was coming back.",
+    "Kid Speech Bubble":"none",
+    "Baby Thought Bubble (Newborn / Infant Only)":"Sir, I am brand new here.",
+    "Comic Style & Vibe":"dramatic anime comedy expression style",
+    "Expression Level":"shocked reaction faces",
+    "Background Chaos":"movie posters, concession counter, popcorn buckets, velvet ropes, and people watching",
+    "Lighting & Color":"neon comic glow",
+    "Camera & Composition":"Etsy thumbnail friendly composition",
+    "Output Quality":"sharp readable text bubble"
+  }},
+  {name:"🧺 Laundromat Dad Ducking", set:{
+    "Scene & Setting":"laundromat",
+    "Family Ethnicity / Heritage":"Dominican family",
+    "Family Skin Color":"warm tan skin tones",
+    "Mom's Attitude":"holding toddler snacks like receipts",
+    "Dad's Excuse / Action":"pretending not to hear mom",
+    "Kid's Funny Action":"18-month-old dragging the diaper bag with both hands",
+    "Mom Speech Bubble":"Your escape route has a toddler toll.",
+    "Dad Speech Bubble":"My phone made me do it.",
+    "Kid Speech Bubble":"I bring snacks!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"bold webcomic style",
+    "Expression Level":"playful exaggerated features",
+    "Background Chaos":"laundry basket overflowing",
+    "Lighting & Color":"bright fluorescent laundromat lighting",
+    "Camera & Composition":"wide angle full-body composition",
+    "Output Quality":"crisp outlines and polished highlights"
+  }},
+  {name:"🚿 Bathroom Doorway Busted", set:{
+    "Scene & Setting":"bathroom doorway",
+    "Family Ethnicity / Heritage":"White American family",
+    "Family Skin Color":"fair skin tones",
+    "Mom's Attitude":"looking over her glasses",
+    "Dad's Excuse / Action":"pretending to stretch so it looks like exercise",
+    "Kid's Funny Action":"toddler blocking the door with a stuffed animal",
+    "Mom Speech Bubble":"You tried it, and failed.",
+    "Dad Speech Bubble":"I was stretching, not leaving.",
+    "Kid Speech Bubble":"No bye!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"funny comic strip vibe",
+    "Expression Level":"wide-eyed guilty dad face",
+    "Background Chaos":"toys scattered on the floor",
+    "Lighting & Color":"soft home lighting with shiny highlights",
+    "Camera & Composition":"focus on all three characters",
+    "Output Quality":"no cropped heads or feet"
+  }},
+  {name:"☕ Coffee Shop Responsibility Receipt", set:{
+    "Scene & Setting":"coffee shop line",
+    "Family Ethnicity / Heritage":"East Asian family",
+    "Family Skin Color":"mom deep brown, dad medium brown, child golden brown",
+    "Mom's Attitude":"checking her watch with attitude",
+    "Dad's Excuse / Action":"holding a coffee like he has somewhere important to be",
+    "Kid's Funny Action":"2-year-old holding dad's water bottle hostage",
+    "Mom Speech Bubble":"You forgot your tiny manager.",
+    "Dad Speech Bubble":"I was going to be quick quick.",
+    "Kid Speech Bubble":"I got juice!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"vibrant magazine comic panel",
+    "Expression Level":"big expressive cartoon eyes",
+    "Background Chaos":"customers watching the drama",
+    "Lighting & Color":"bright indoor public lighting",
+    "Camera & Composition":"balanced family interaction scene",
+    "Output Quality":"commercial-quality comic art"
+  }},
+  {name:"🧸 Toy Store Tiny Manager", set:{
+    "Scene & Setting":"toy store aisle",
+    "Family Ethnicity / Heritage":"South Asian family",
+    "Family Skin Color":"golden brown skin tones",
+    "Mom's Attitude":"giving courtroom cross-examination energy",
+    "Dad's Excuse / Action":"checking imaginary notifications",
+    "Kid's Funny Action":"2-year-old smiling like they won",
+    "Mom Speech Bubble":"The baby already clocked in.",
+    "Dad Speech Bubble":"I was checking the weather.",
+    "Kid Speech Bubble":"I boss baby!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"playful meme cartoon style",
+    "Expression Level":"shocked reaction faces",
+    "Background Chaos":"customers watching the drama",
+    "Lighting & Color":"bright indoor public lighting",
+    "Camera & Composition":"Etsy thumbnail friendly composition",
+    "Output Quality":"fully finished viral social media image"
+  }},
+  {name:"🚘 Car Wash Parking Lot Escape", set:{
+    "Scene & Setting":"car wash parking lot",
+    "Family Ethnicity / Heritage":"Latina family",
+    "Family Skin Color":"warm mahogany skin tones",
+    "Mom's Attitude":"holding diaper bag out like a court exhibit",
+    "Dad's Excuse / Action":"holding gym bag like evidence",
+    "Kid's Funny Action":"4-month-old baby reaching toward dad from mom's arms",
+    "Mom Speech Bubble":"That is YOUR baby.",
+    "Dad Speech Bubble":"This gym bag is not evidence.",
+    "Kid Speech Bubble":"none",
+    "Baby Thought Bubble (Newborn / Infant Only)":"I cannot even hold my head up and I know he wrong.",
+    "Comic Style & Vibe":"glossy 3D animated cartoon",
+    "Expression Level":"wide-eyed guilty dad face",
+    "Background Chaos":"cars, sidewalk details, open driveway space, neighbors watching, and playful motion lines",
+    "Lighting & Color":"bright outdoor daylight",
+    "Camera & Composition":"full scene visible no cropping",
+    "Output Quality":"clean high-resolution ultra-detailed"
+  }},
+  {name:"✈️ Airport Curb Dad Panic", set:{
+    "Scene & Setting":"airport drop-off curb",
+    "Family Ethnicity / Heritage":"Middle Eastern family",
+    "Family Skin Color":"rich dark brown skin tones",
+    "Mom's Attitude":"holding Dad's forgotten hoodie",
+    "Dad's Excuse / Action":"acting like he just remembered an appointment",
+    "Kid's Funny Action":"toddler pulling the diaper bag like a suitcase",
+    "Mom Speech Bubble":"You forgot your plus-one.",
+    "Dad Speech Bubble":"I swear this was not the plan.",
+    "Kid Speech Bubble":"We leaving?",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"high-definition animated sitcom style",
+    "Expression Level":"comedic panic faces",
+    "Background Chaos":"mall shoppers, storefront signs, stroller traffic, and spilled snacks",
+    "Lighting & Color":"bright outdoor daylight",
+    "Camera & Composition":"wide angle full-body composition",
+    "Output Quality":"premium glossy HD finish"
+  }},
+  {name:"🏨 Hotel Lobby Sneak Move", set:{
+    "Scene & Setting":"hotel lobby",
+    "Family Ethnicity / Heritage":"Filipino family",
+    "Family Skin Color":"honey brown skin tones",
+    "Mom's Attitude":"doing the silent mom stare",
+    "Dad's Excuse / Action":"trying to sneak past with snacks in hand",
+    "Kid's Funny Action":"1-year-old dragging a tiny blanket behind dad",
+    "Mom Speech Bubble":"You and your tiny supervisor can go together.",
+    "Dad Speech Bubble":"I’m being framed by a toddler.",
+    "Kid Speech Bubble":"Me too!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"premium glossy sticker-comic style",
+    "Expression Level":"chaotic sitcom expressions",
+    "Background Chaos":"customers watching the drama",
+    "Lighting & Color":"soft indoor public lighting",
+    "Camera & Composition":"balanced family interaction scene",
+    "Output Quality":"sharp readable text bubble"
+  }},
+  {name:"📸 Photo Studio Dad Freeze", set:{
+    "Scene & Setting":"photo studio waiting area",
+    "Family Ethnicity / Heritage":"Puerto Rican family",
+    "Family Skin Color":"caramel brown skin tones",
+    "Mom's Attitude":"quiet storm face",
+    "Dad's Excuse / Action":"frozen mid-step with panic eyes",
+    "Kid's Funny Action":"12-month-old baby toddling after dad with one shoe on",
+    "Mom Speech Bubble":"The stroller is ready, Daddy.",
+    "Dad Speech Bubble":"This is not what it looks like.",
+    "Kid Speech Bubble":"Shoes! Shoes!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"clean vector comic style",
+    "Expression Level":"slightly dramatic expressions",
+    "Background Chaos":"family photos crooked on the wall",
+    "Lighting & Color":"soft indoor public lighting",
+    "Camera & Composition":"focus on all three characters",
+    "Output Quality":"no blurry faces"
+  }},
+  {name:"🏀 Sports Practice Sideline", set:{
+    "Scene & Setting":"sports practice sideline",
+    "Family Ethnicity / Heritage":"Italian American family",
+    "Family Skin Color":"medium olive skin tones",
+    "Mom's Attitude":"giving the look that cancels plans",
+    "Dad's Excuse / Action":"claiming the boys are already waiting",
+    "Kid's Funny Action":"toddler waving a tiny sock like a flag",
+    "Mom Speech Bubble":"Your break got canceled.",
+    "Dad Speech Bubble":"The boys are waiting on me.",
+    "Kid Speech Bubble":"Wait me!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"Saturday morning cartoon chaos",
+    "Expression Level":"over-the-top dramatic faces",
+    "Background Chaos":"school pickup signs, backpacks, parents watching, and kids in the background",
+    "Lighting & Color":"bright outdoor daylight",
+    "Camera & Composition":"dynamic motion energy",
+    "Output Quality":"commercial-quality comic art"
+  }},
+  {name:"🏫 School Pickup Tiny Boss", set:{
+    "Scene & Setting":"school pickup line",
+    "Family Ethnicity / Heritage":"Korean American family",
+    "Family Skin Color":"light brown skin tones",
+    "Mom's Attitude":"folded arms with eyebrow raised",
+    "Dad's Excuse / Action":"pointing outside like the car called him",
+    "Kid's Funny Action":"kid packed and ready like a road trip",
+    "Mom Speech Bubble":"Go ahead and buckle him in.",
+    "Dad Speech Bubble":"The car started without me.",
+    "Kid Speech Bubble":"I ready ready!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"urban family comic style",
+    "Expression Level":"playful exaggerated features",
+    "Background Chaos":"school pickup signs, backpacks, parents watching, and kids in the background",
+    "Lighting & Color":"bright school hallway lighting",
+    "Camera & Composition":"full scene visible no cropping",
+    "Output Quality":"fully finished viral social media image"
+  }},
+  {name:"🍼 Newborn Stroller Side-Eye", set:{
+    "Scene & Setting":"bedroom doorway",
+    "Family Ethnicity / Heritage":"Greek American family",
+    "Family Skin Color":"porcelain skin tones",
+    "Mom's Attitude":"holding a pacifier low in her hand like evidence",
+    "Dad's Excuse / Action":"backing out the door slowly",
+    "Kid's Funny Action":"tiny newborn wrapped up safely in a stroller with the diaper bag beside mom",
+    "Mom Speech Bubble":"Daddy duty starts at the door.",
+    "Dad Speech Bubble":"I thought he was asleep.",
+    "Kid Speech Bubble":"none",
+    "Baby Thought Bubble (Newborn / Infant Only)":"I just got here and he already trying to diss me.",
+    "Comic Style & Vibe":"storybook cartoon comedy",
+    "Expression Level":"big expressive cartoon eyes",
+    "Background Chaos":"toys scattered on the floor",
+    "Lighting & Color":"soft home lighting with shiny highlights",
+    "Camera & Composition":"full-body vertical 9:16 framing",
+    "Output Quality":"no cropped heads or feet"
+  }},
+  {name:"🛍️ Mall Food Court Escape Tax", set:{
+    "Scene & Setting":"mall food court",
+    "Family Ethnicity / Heritage":"multicultural blended family",
+    "Family Skin Color":"mixed skin tones across family members",
+    "Mom's Attitude":"mom face says try me",
+    "Dad's Excuse / Action":"wearing sunglasses indoors to avoid eye contact",
+    "Kid's Funny Action":"toddler wearing oversized sunglasses like a travel boss",
+    "Mom Speech Bubble":"Your escape route has a toddler toll.",
+    "Dad Speech Bubble":"He likes you more though.",
+    "Kid Speech Bubble":"Dada stuck!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"dramatic anime comedy expression style",
+    "Expression Level":"shocked reaction faces",
+    "Background Chaos":"mall shoppers, storefront signs, stroller traffic, and spilled snacks",
+    "Lighting & Color":"bright mall lighting",
+    "Camera & Composition":"Etsy thumbnail friendly composition",
+    "Output Quality":"crisp outlines and polished highlights"
+  }},
+  {name:"🏡 Apartment Hallway Sneak Fail", set:{
+    "Scene & Setting":"apartment hallway",
+    "Family Ethnicity / Heritage":"Dominican family",
+    "Family Skin Color":"warm mahogany skin tones",
+    "Mom's Attitude":"standing in front of the exit like security",
+    "Dad's Excuse / Action":"opening the door one inch at a time",
+    "Kid's Funny Action":"11-month-old standing at the door holding the wall",
+    "Mom Speech Bubble":"Daddy duty starts at the door.",
+    "Dad Speech Bubble":"I was just checking the door.",
+    "Kid Speech Bubble":"none",
+    "Baby Thought Bubble (Newborn / Infant Only)":"Daddy tried it.",
+    "Comic Style & Vibe":"glossy 3D animated cartoon",
+    "Expression Level":"wide-eyed guilty dad face",
+    "Background Chaos":"shoes everywhere by the door",
+    "Lighting & Color":"soft home lighting with shiny highlights",
+    "Camera & Composition":"front door centered composition",
+    "Output Quality":"no cropped heads or feet"
+  }},
+  {name:"🌧️ Back Porch Quick Errand Lie", set:{
+    "Scene & Setting":"back porch",
+    "Family Ethnicity / Heritage":"Black Southern family",
+    "Family Skin Color":"deep espresso skin tones",
+    "Mom's Attitude":"leaning on the door frame with judgment",
+    "Dad's Excuse / Action":"claiming he has a quick errand",
+    "Kid's Funny Action":"2-year-old dragging dad's hoodie behind him",
+    "Mom Speech Bubble":"Since you got plans, so does he.",
+    "Dad Speech Bubble":"I was going to be quick quick.",
+    "Kid Speech Bubble":"Me too!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"funny comic strip vibe",
+    "Expression Level":"comedic panic faces",
+    "Background Chaos":"dog watching the drama",
+    "Lighting & Color":"bright outdoor daylight",
+    "Camera & Composition":"wide angle full-body composition",
+    "Output Quality":"commercial-quality comic art"
+  }},
+  {name:"🧼 Bathroom Doorway Escape Math", set:{
+    "Scene & Setting":"bathroom doorway",
+    "Family Ethnicity / Heritage":"Puerto Rican family",
+    "Family Skin Color":"caramel brown skin tones",
+    "Mom's Attitude":"holding the diaper bag strap like a leash",
+    "Dad's Excuse / Action":"pretending to stretch so it looks like exercise",
+    "Kid's Funny Action":"toddler sitting on dad's shoes so he cannot leave",
+    "Mom Speech Bubble":"Your escape route has a toddler toll.",
+    "Dad Speech Bubble":"I was stretching, not leaving.",
+    "Kid Speech Bubble":"Dada stuck!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"Saturday morning cartoon chaos",
+    "Expression Level":"playful exaggerated features",
+    "Background Chaos":"laundry basket overflowing",
+    "Lighting & Color":"soft home lighting with shiny highlights",
+    "Camera & Composition":"focus on all three characters",
+    "Output Quality":"clean high-resolution ultra-detailed"
+  }},
+  {name:"💅 Beauty Salon Dad Exit", set:{
+    "Scene & Setting":"beauty salon",
+    "Family Ethnicity / Heritage":"Afro-Latina family",
+    "Family Skin Color":"mom deep brown, dad medium brown, child golden brown",
+    "Mom's Attitude":"looking over her glasses",
+    "Dad's Excuse / Action":"pretending not to hear mom",
+    "Kid's Funny Action":"18-month-old pointing at dad like a tiny witness",
+    "Mom Speech Bubble":"Take him with you then.",
+    "Dad Speech Bubble":"Can we talk about this later?",
+    "Kid Speech Bubble":"Mama said!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"urban family comic style",
+    "Expression Level":"shocked reaction faces",
+    "Background Chaos":"customers watching the drama",
+    "Lighting & Color":"bright indoor public lighting",
+    "Camera & Composition":"balanced family interaction scene",
+    "Output Quality":"sharp readable text bubble"
+  }},
+  {name:"🛏️ Bedroom Doorway Dad Freeze", set:{
+    "Scene & Setting":"bedroom doorway",
+    "Family Ethnicity / Heritage":"White American family",
+    "Family Skin Color":"fair skin tones",
+    "Mom's Attitude":"doing the silent mom stare",
+    "Dad's Excuse / Action":"frozen mid-step with panic eyes",
+    "Kid's Funny Action":"newborn in a stroller with tiny socks peeking out",
+    "Mom Speech Bubble":"That is YOUR baby.",
+    "Dad Speech Bubble":"I thought he was asleep.",
+    "Kid Speech Bubble":"none",
+    "Baby Thought Bubble (Newborn / Infant Only)":"Sir, I am brand new here.",
+    "Comic Style & Vibe":"storybook cartoon comedy",
+    "Expression Level":"slightly dramatic expressions",
+    "Background Chaos":"family photos crooked on the wall",
+    "Lighting & Color":"warm morning sunlight",
+    "Camera & Composition":"full scene visible no cropping",
+    "Output Quality":"premium glossy HD finish"
+  }},
+  {name:"🧃 Baby Aisle Responsibility Check", set:{
+    "Scene & Setting":"baby aisle at the store",
+    "Family Ethnicity / Heritage":"Middle Eastern family",
+    "Family Skin Color":"rich dark brown skin tones",
+    "Mom's Attitude":"holding baby wipes like evidence",
+    "Dad's Excuse / Action":"checking imaginary notifications",
+    "Kid's Funny Action":"10-month-old tugging the diaper bag zipper",
+    "Mom Speech Bubble":"I know you saw that diaper bag.",
+    "Dad Speech Bubble":"My phone made me do it.",
+    "Kid Speech Bubble":"none",
+    "Baby Thought Bubble (Newborn / Infant Only)":"Somebody tell Dad I travel with equipment.",
+    "Comic Style & Vibe":"bold webcomic style",
+    "Expression Level":"chaotic sitcom expressions",
+    "Background Chaos":"shopping carts, aisle signs, and spilled snacks",
+    "Lighting & Color":"bright grocery store lighting",
+    "Camera & Composition":"full-body vertical 9:16 framing",
+    "Output Quality":"crisp outlines and polished highlights"
+  }},
+  {name:"🌽 Family Reunion Nope Sir", set:{
+    "Scene & Setting":"family reunion",
+    "Family Ethnicity / Heritage":"Black Caribbean family",
+    "Family Skin Color":"warm mahogany skin tones",
+    "Mom's Attitude":"giving the look that cancels plans",
+    "Dad's Excuse / Action":"trying to sneak past with snacks in hand",
+    "Kid's Funny Action":"2-year-old packed and ready like a road trip",
+    "Mom Speech Bubble":"You and your tiny supervisor can go together.",
+    "Dad Speech Bubble":"He packed himself, honestly.",
+    "Kid Speech Bubble":"I ready ready!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"vibrant magazine comic panel",
+    "Expression Level":"over-the-top dramatic faces",
+    "Background Chaos":"customers watching the drama",
+    "Lighting & Color":"bright outdoor daylight",
+    "Camera & Composition":"Etsy thumbnail friendly composition",
+    "Output Quality":"fully finished viral social media image"
+  }},
+  {name:"⛽ Gas Station Diaper Bag Court", set:{
+    "Scene & Setting":"gas station parking lot",
+    "Family Ethnicity / Heritage":"Mexican American family",
+    "Family Skin Color":"golden brown skin tones",
+    "Mom's Attitude":"holding diaper bag out like a court exhibit",
+    "Dad's Excuse / Action":"saying he has to move the car",
+    "Kid's Funny Action":"12-month-old waving bye like they are invited",
+    "Mom Speech Bubble":"Go ahead and buckle him in.",
+    "Dad Speech Bubble":"The car started without me.",
+    "Kid Speech Bubble":"Car ride!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"exaggerated caricature cartoon",
+    "Expression Level":"big expressive cartoon eyes",
+    "Background Chaos":"cars, sidewalk details, open driveway space, neighbors watching, and playful motion lines",
+    "Lighting & Color":"bright outdoor daylight",
+    "Camera & Composition":"wide angle full-body composition",
+    "Output Quality":"no blurry faces"
+  }},
+  {name:"🍔 Restaurant Booth Escape Fee", set:{
+    "Scene & Setting":"restaurant booth",
+    "Family Ethnicity / Heritage":"South Asian family",
+    "Family Skin Color":"medium olive skin tones",
+    "Mom's Attitude":"fake smile with rage underneath",
+    "Dad's Excuse / Action":"pretending he forgot something outside",
+    "Kid's Funny Action":"18-month-old carrying wipes like luggage",
+    "Mom Speech Bubble":"Your little roommate is coming too.",
+    "Dad Speech Bubble":"This is not what it looks like.",
+    "Kid Speech Bubble":"Me too!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"premium glossy sticker-comic style",
+    "Expression Level":"mom face says try me",
+    "Background Chaos":"restaurant booth, menus, spilled fries, and diners watching",
+    "Lighting & Color":"warm restaurant lighting",
+    "Camera & Composition":"balanced family interaction scene",
+    "Output Quality":"sharp readable text bubble"
+  }},
+  {name:"🛝 Playground Dad Detour", set:{
+    "Scene & Setting":"park playground",
+    "Family Ethnicity / Heritage":"East African family",
+    "Family Skin Color":"rich dark brown skin tones",
+    "Mom's Attitude":"checking her watch with attitude",
+    "Dad's Excuse / Action":"acting like he just remembered an appointment",
+    "Kid's Funny Action":"toddler blocking the door with a stuffed animal",
+    "Mom Speech Bubble":"Your break got canceled.",
+    "Dad Speech Bubble":"I was checking the weather.",
+    "Kid Speech Bubble":"No bye!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"playful meme cartoon style",
+    "Expression Level":"comedic panic faces",
+    "Background Chaos":"cartoon motion lines everywhere",
+    "Lighting & Color":"bright outdoor daylight",
+    "Camera & Composition":"dynamic motion energy",
+    "Output Quality":"commercial-quality comic art"
+  }},
+  {name:"🏠 Front Yard Tiny Witness", set:{
+    "Scene & Setting":"front yard",
+    "Family Ethnicity / Heritage":"multicultural blended family",
+    "Family Skin Color":"mixed skin tones across family members",
+    "Mom's Attitude":"pointing at dad like a referee",
+    "Dad's Excuse / Action":"holding keys behind his back",
+    "Kid's Funny Action":"baby pointing at dad like a witness",
+    "Mom Speech Bubble":"Sir, your responsibility is following you.",
+    "Dad Speech Bubble":"I’m being framed by a toddler.",
+    "Kid Speech Bubble":"I help!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"clean vector comic style",
+    "Expression Level":"shocked reaction faces",
+    "Background Chaos":"neighbors peeking through window",
+    "Lighting & Color":"bright outdoor daylight",
+    "Camera & Composition":"focus on all three characters",
+    "Output Quality":"clean high-resolution ultra-detailed"
+  }},
+  {name:"🎟️ Movie Theater Popcorn Plot", set:{
+    "Scene & Setting":"movie theater lobby",
+    "Family Ethnicity / Heritage":"Korean American family",
+    "Family Skin Color":"light brown skin tones",
+    "Mom's Attitude":"holding car keys like proof",
+    "Dad's Excuse / Action":"turning around with a fake innocent smile",
+    "Kid's Funny Action":"8-month-old baby reaching for dad's shoe",
+    "Mom Speech Bubble":"You forgot your plus-one.",
+    "Dad Speech Bubble":"I promise I was coming back.",
+    "Kid Speech Bubble":"none",
+    "Baby Thought Bubble (Newborn / Infant Only)":"I need milk, not excuses.",
+    "Comic Style & Vibe":"dramatic anime comedy expression style",
+    "Expression Level":"wide-eyed guilty dad face",
+    "Background Chaos":"movie posters, concession counter, popcorn buckets, velvet ropes, and people watching",
+    "Lighting & Color":"neon comic glow",
+    "Camera & Composition":"full scene visible no cropping",
+    "Output Quality":"crisp outlines and polished highlights"
+  }},
+  {name:"🛫 Airport Curb Plus-One", set:{
+    "Scene & Setting":"airport drop-off curb",
+    "Family Ethnicity / Heritage":"Arab American family",
+    "Family Skin Color":"warm tan skin tones",
+    "Mom's Attitude":"standing firm like a courtroom judge",
+    "Dad's Excuse / Action":"pointing outside like the car called him",
+    "Kid's Funny Action":"1-year-old dragging a tiny blanket behind dad",
+    "Mom Speech Bubble":"You forgot your tiny manager.",
+    "Dad Speech Bubble":"The car started without me.",
+    "Kid Speech Bubble":"Where we going?",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"glossy 3D animated cartoon",
+    "Expression Level":"chaotic sitcom expressions",
+    "Background Chaos":"cartoon motion lines everywhere",
+    "Lighting & Color":"bright outdoor daylight",
+    "Camera & Composition":"wide angle full-body composition",
+    "Output Quality":"no cropped heads or feet"
+  }},
+  {name:"🏨 Hotel Lobby Responsibility Desk", set:{
+    "Scene & Setting":"hotel lobby",
+    "Family Ethnicity / Heritage":"Filipino family",
+    "Family Skin Color":"honey brown skin tones",
+    "Mom's Attitude":"holding one tiny shoe in disbelief",
+    "Dad's Excuse / Action":"laughing nervously like it is not serious",
+    "Kid's Funny Action":"2-year-old trying to climb into dad's gym bag",
+    "Mom Speech Bubble":"You tried it, and failed.",
+    "Dad Speech Bubble":"I can explain.",
+    "Kid Speech Bubble":"Bag mine!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"Pixar-inspired family comedy style",
+    "Expression Level":"over-the-top dramatic faces",
+    "Background Chaos":"customers watching the drama",
+    "Lighting & Color":"soft indoor public lighting",
+    "Camera & Composition":"balanced family interaction scene",
+    "Output Quality":"premium glossy HD finish"
+  }},
+  {name:"📷 Photo Studio Tiny Boss", set:{
+    "Scene & Setting":"photo studio waiting area",
+    "Family Ethnicity / Heritage":"Italian American family",
+    "Family Skin Color":"beige skin tones",
+    "Mom's Attitude":"mom face says try me",
+    "Dad's Excuse / Action":"trying to blend into the wall",
+    "Kid's Funny Action":"2-year-old holding dad's water bottle hostage",
+    "Mom Speech Bubble":"You forgot your tiny manager.",
+    "Dad Speech Bubble":"I thought nap time counted.",
+    "Kid Speech Bubble":"I tiny boss!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"vibrant magazine comic panel",
+    "Expression Level":"baby thrilled and determined",
+    "Background Chaos":"waiting room chairs, clinic posters, and people side-eyeing",
+    "Lighting & Color":"bright indoor public lighting",
+    "Camera & Composition":"Etsy thumbnail friendly composition",
+    "Output Quality":"fully finished viral social media image"
+  }},
+  {name:"🏛️ Community Center Dad Trial", set:{
+    "Scene & Setting":"community center lobby",
+    "Family Ethnicity / Heritage":"Native American family",
+    "Family Skin Color":"warm tan skin tones",
+    "Mom's Attitude":"giving courtroom cross-examination energy",
+    "Dad's Excuse / Action":"acting shocked he got caught",
+    "Kid's Funny Action":"kid holding dad's keys hostage",
+    "Mom Speech Bubble":"The diaper bag has spoken.",
+    "Dad Speech Bubble":"I plead the fifth.",
+    "Kid Speech Bubble":"Keys please!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"funny comic strip vibe",
+    "Expression Level":"shocked reaction faces",
+    "Background Chaos":"folding chairs and welcome table in background",
+    "Lighting & Color":"bright indoor public lighting",
+    "Camera & Composition":"comic panel layout",
+    "Output Quality":"sharp readable text bubble"
+  }},
+  {name:"🏈 Sports Practice Sideline Sprint", set:{
+    "Scene & Setting":"sports practice sideline",
+    "Family Ethnicity / Heritage":"Irish American family",
+    "Family Skin Color":"fair skin tones",
+    "Mom's Attitude":"folded arms with eyebrow raised",
+    "Dad's Excuse / Action":"checking his phone nervously",
+    "Kid's Funny Action":"2-year-old holding dad's water bottle hostage",
+    "Mom Speech Bubble":"Since you got plans, so does he.",
+    "Dad Speech Bubble":"The boys are waiting on me.",
+    "Kid Speech Bubble":"I got plans!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"high-definition animated sitcom style",
+    "Expression Level":"wide-eyed guilty dad face",
+    "Background Chaos":"school pickup signs, backpacks, parents watching, and kids in the background",
+    "Lighting & Color":"bright outdoor daylight",
+    "Camera & Composition":"dynamic motion energy",
+    "Output Quality":"commercial-quality comic art"
+  }},
+  {name:"🛒 Target Aisle Tiny Manager", set:{
+    "Scene & Setting":"target-style store aisle",
+    "Family Ethnicity / Heritage":"Vietnamese family",
+    "Family Skin Color":"golden brown skin tones",
+    "Mom's Attitude":"quiet storm face",
+    "Dad's Excuse / Action":"holding a coffee like he has somewhere important to be",
+    "Kid's Funny Action":"2-year-old smiling like they won",
+    "Mom Speech Bubble":"You forgot your tiny manager.",
+    "Dad Speech Bubble":"I forgot my water bottle.",
+    "Kid Speech Bubble":"Snack please!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"bold webcomic style",
+    "Expression Level":"comedic panic faces",
+    "Background Chaos":"checkout conveyor belt, shopping carts, price signs, and customers watching",
+    "Lighting & Color":"bright indoor public lighting",
+    "Camera & Composition":"focus on all three characters",
+    "Output Quality":"clean high-resolution ultra-detailed"
+  }},
+  {name:"🧸 Toy Store Dad Trap", set:{
+    "Scene & Setting":"toy store aisle",
+    "Family Ethnicity / Heritage":"Brazilian family",
+    "Family Skin Color":"caramel brown skin tones",
+    "Mom's Attitude":"unbothered queen energy",
+    "Dad's Excuse / Action":"trying to close the door quietly",
+    "Kid's Funny Action":"toddler waving a tiny sock like a flag",
+    "Mom Speech Bubble":"Your little roommate is coming too.",
+    "Dad Speech Bubble":"I swear this was not the plan.",
+    "Kid Speech Bubble":"Wait me!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"playful meme cartoon style",
+    "Expression Level":"playful exaggerated features",
+    "Background Chaos":"shopping carts, aisle signs, and spilled snacks",
+    "Lighting & Color":"bright indoor public lighting",
+    "Camera & Composition":"full-body vertical 9:16 framing",
+    "Output Quality":"no extra fingers"
+  }},
+  {name:"🚑 Urgent Care Dad Denial", set:{
+    "Scene & Setting":"urgent care waiting room",
+    "Family Ethnicity / Heritage":"Pakistani American family",
+    "Family Skin Color":"medium olive skin tones",
+    "Mom's Attitude":"holding baby wipes like evidence",
+    "Dad's Excuse / Action":"wearing sunglasses indoors to avoid eye contact",
+    "Kid's Funny Action":"6-month-old holding a toy phone like they called mom",
+    "Mom Speech Bubble":"Absolutely not, sir.",
+    "Dad Speech Bubble":"I thought we agreed verbally in my head.",
+    "Kid Speech Bubble":"none",
+    "Baby Thought Bubble (Newborn / Infant Only)":"I cannot even hold my head up and I know he wrong.",
+    "Comic Style & Vibe":"clean vector comic style",
+    "Expression Level":"big expressive cartoon eyes",
+    "Background Chaos":"waiting room chairs, clinic posters, and people side-eyeing",
+    "Lighting & Color":"bright clinic waiting room lighting",
+    "Camera & Composition":"balanced family interaction scene",
+    "Output Quality":"sharp readable text bubble"
+  }},
+  {name:"🚙 Car Wash Dad Washed Up", set:{
+    "Scene & Setting":"car wash parking lot",
+    "Family Ethnicity / Heritage":"Cuban American family",
+    "Family Skin Color":"light brown skin tones",
+    "Mom's Attitude":"holding toddler snacks like receipts",
+    "Dad's Excuse / Action":"doing the guilty slow walk",
+    "Kid's Funny Action":"4-month-old baby reaching toward dad from mom's arms",
+    "Mom Speech Bubble":"The baby already clocked in.",
+    "Dad Speech Bubble":"I was taking out the trash emotionally.",
+    "Kid Speech Bubble":"none",
+    "Baby Thought Bubble (Newborn / Infant Only)":"Blink twice if Daddy is trying to escape.",
+    "Comic Style & Vibe":"premium glossy sticker-comic style",
+    "Expression Level":"chaotic sitcom expressions",
+    "Background Chaos":"cars, sidewalk details, open driveway space, neighbors watching, and playful motion lines",
+    "Lighting & Color":"bright outdoor daylight",
+    "Camera & Composition":"wide angle full-body composition",
+    "Output Quality":"premium glossy HD finish"
+  }},
+  {name:"🎓 School Pickup Accountability", set:{
+    "Scene & Setting":"school pickup line",
+    "Family Ethnicity / Heritage":"Chinese American family",
+    "Family Skin Color":"warm tan skin tones",
+    "Mom's Attitude":"staring like she already heard every excuse",
+    "Dad's Excuse / Action":"claiming the boys are already waiting",
+    "Kid's Funny Action":"kid packed and ready like a road trip",
+    "Mom Speech Bubble":"That baby has your whole face.",
+    "Dad Speech Bubble":"I already changed one diaper today.",
+    "Kid Speech Bubble":"I bring snacks!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"urban family comic style",
+    "Expression Level":"mom face says try me",
+    "Background Chaos":"school pickup signs, backpacks, parents watching, and kids in the background",
+    "Lighting & Color":"bright school hallway lighting",
+    "Camera & Composition":"full scene visible no cropping",
+    "Output Quality":"no cropped heads or feet"
+  }},
+  {name:"🪜 Staircase Landing Dad Block", set:{
+    "Scene & Setting":"staircase landing",
+    "Family Ethnicity / Heritage":"Greek American family",
+    "Family Skin Color":"porcelain skin tones",
+    "Mom's Attitude":"holding Dad's forgotten hoodie",
+    "Dad's Excuse / Action":"trying to sneak away with one shoe untied",
+    "Kid's Funny Action":"10-month-old tugging the diaper bag zipper",
+    "Mom Speech Bubble":"The stroller is ready, Daddy.",
+    "Dad Speech Bubble":"Can I at least change shoes?",
+    "Kid Speech Bubble":"none",
+    "Baby Thought Bubble (Newborn / Infant Only)":"This man better grab my diaper bag.",
+    "Comic Style & Vibe":"exaggerated caricature cartoon",
+    "Expression Level":"over-the-top dramatic faces",
+    "Background Chaos":"shoes everywhere by the door",
+    "Lighting & Color":"soft home lighting with shiny highlights",
+    "Camera & Composition":"dynamic motion energy",
+    "Output Quality":"commercial-quality comic art"
+  }},
+  {name:"🍽️ Holiday Dinner Sneakout", set:{
+    "Scene & Setting":"holiday dinner",
+    "Family Ethnicity / Heritage":"Jewish family",
+    "Family Skin Color":"beige skin tones",
+    "Mom's Attitude":"giving soft voice scary mom energy",
+    "Dad's Excuse / Action":"pretending the baby is already asleep",
+    "Kid's Funny Action":"1-year-old wearing one shoe and holding the other",
+    "Mom Speech Bubble":"Do not act brand new today.",
+    "Dad Speech Bubble":"He likes you more though.",
+    "Kid Speech Bubble":"Shoes! Shoes!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"storybook cartoon comedy",
+    "Expression Level":"slightly dramatic expressions",
+    "Background Chaos":"messy but funny family home energy",
+    "Lighting & Color":"warm restaurant lighting",
+    "Camera & Composition":"balanced family interaction scene",
+    "Output Quality":"fully finished viral social media image"
+  }},
+  {name:"🚪 Garage Escape Denied Again", set:{
+    "Scene & Setting":"garage escape",
+    "Family Ethnicity / Heritage":"West African family",
+    "Family Skin Color":"deep espresso skin tones",
+    "Mom's Attitude":"holding the stroller handle like a warning",
+    "Dad's Excuse / Action":"trying to escape through the garage",
+    "Kid's Funny Action":"5-month-old kicking happily in a stroller",
+    "Mom Speech Bubble":"That baby said road trip.",
+    "Dad Speech Bubble":"Why is he already packed?",
+    "Kid Speech Bubble":"none",
+    "Baby Thought Bubble (Newborn / Infant Only)":"I came with bottles, blankets, and responsibilities.",
+    "Comic Style & Vibe":"glossy 3D animated cartoon",
+    "Expression Level":"wide-eyed guilty dad face",
+    "Background Chaos":"gym schedule on the wall",
+    "Lighting & Color":"warm morning sunlight",
+    "Camera & Composition":"wide angle full-body composition",
+    "Output Quality":"clean high-resolution ultra-detailed"
+  }},
+  {name:"👶 Baby Shower Belly Plus Baby", set:{
+    "Scene & Setting":"baby shower",
+    "Family Ethnicity / Heritage":"African American family",
+    "Family Skin Color":"mom caramel brown, dad deep espresso, child honey brown",
+    "Mom's Attitude":"holding diaper bag out like a court exhibit",
+    "Dad's Excuse / Action":"backing out the door slowly",
+    "Kid's Funny Action":"2-year-old throwing toys into the diaper bag",
+    "Mom Speech Bubble":"Since you got plans, so does he.",
+    "Dad Speech Bubble":"I thought he was staying with you.",
+    "Kid Speech Bubble":"I packed it!",
+    "Baby Thought Bubble (Newborn / Infant Only)":"none",
+    "Comic Style & Vibe":"vibrant magazine comic panel",
+    "Expression Level":"big expressive cartoon eyes",
+    "Background Chaos":"folding chairs and welcome table in background",
+    "Lighting & Color":"bright indoor public lighting",
+    "Camera & Composition":"Etsy thumbnail friendly composition",
+    "Output Quality":"fully finished viral social media image"
+  }}
+
+];
+
+function makeControls(){
+  const root=document.getElementById('controls');
+  Object.entries(data).forEach(([key,opts],idx)=>{
+    const acc=document.createElement('div'); acc.className='accordion open';
+    acc.innerHTML=`<div class="acc-head" onclick="this.parentElement.classList.toggle('open')">${idx+1}. ${key} <span>⬇</span></div><div class="acc-body"></div>`;
+    const body=acc.querySelector('.acc-body');
+    if(key==="Custom Extra Details"){
+      body.innerHTML=`<div class="control"><label>Add your own details</label><textarea id="${id(key)}" placeholder="Example: mom has a messy bun, dad has a black gym bag, toddler wears tiny sneakers..."></textarea><div class="small">Use this when the dropdowns don't cover your exact idea.</div></div>`;
+    } else {
+      body.innerHTML=`<div class="control"><label>${key} <span class="lock" onclick="toggleLock(event,'${id(key)}')">🔓 Lock</span></label><select id="${id(key)}">${opts.map(o=>`<option value="${o}">${o}</option>`).join('')}</select><input id="${id(key)}Custom" placeholder="Custom ${key.toLowerCase()}..." style="margin-top:8px"/></div>`;
+    }
+    root.appendChild(acc);
+  });
+}
+function id(s){return s.replace(/[^a-zA-Z0-9]/g,'')}
+let locks={};
+function toggleLock(e,k){e.stopPropagation();locks[k]=!locks[k];e.target.textContent=locks[k]?'🔒 Locked':'🔓 Lock'}
+function getVal(key){
+  const k=id(key), el=document.getElementById(k), c=document.getElementById(k+'Custom');
+  if(!el) return document.getElementById(k)?.value || "";
+  return (c && c.value.trim()) ? c.value.trim() : el.value;
+}
+function setSelectValue(key, value){
+  const el = document.getElementById(id(key));
+  const custom = document.getElementById(id(key) + "Custom");
+  if(!el) return;
+
+  if(custom) custom.value = "";
+
+  const options = Array.from(el.options).map(o => o.value);
+  if(options.includes(value)){
+    el.value = value;
+  } else if(custom && value){
+    custom.value = value;
+  }
+}
+function loadPreset(p){
+  clearAll(false);
+  Object.entries(p.set).forEach(([key,value]) => setSelectValue(key, value));
+  enforceSmartSceneLogic();
+  enforceDadResponsibilityLogic();
+  enforceBabyShowerPregnancyLogic();
+  enforcePropClarityLogic();
+  enforceDadLeavingVisualLogic();
+  enforceSafetyStoryLogic();
+  enforceNewbornThoughtDropdown();
+  enforceAgeMatchedBubble();
+  generateAll();
+  toast("Preset loaded");
+}
+function loadPresets(){
+  const box=document.getElementById('presets');
+  box.innerHTML = "";
+  presets.forEach((p, index)=>{
+    const b=document.createElement('button');
+    b.type = "button";
+    b.textContent=p.name;
+    b.onclick=()=>loadPreset(p);
+    box.appendChild(b);
+  });
+}
+function randomizeAll(){
+  const sceneKey = "Scene & Setting";
+  const sceneEl = document.getElementById(id(sceneKey));
+
+  if(sceneEl && !locks[id(sceneKey)]){
+    sceneEl.value = randomOptionFor(sceneKey, "");
+  }
+
+  const chosenScene = getVal(sceneKey);
+
+  Object.entries(data).forEach(([key,opts])=>{
+    const k=id(key), el=document.getElementById(k);
+    if(!el || locks[k] || key==="Custom Extra Details" || key===sceneKey) return;
+    el.value = randomOptionFor(key, chosenScene);
+  });
+
+  setScenarioSpeechBubbles();
+  enforceNewbornThoughtDropdown();
+  enforceAgeMatchedBubble();
+  enforceSmartSceneLogic();
+  generateAll();
+  toast("Smart randomized!");
+}
+
+
+function enforceSpeechBubbleLogic(){
+  const scene = getVal("Scene & Setting");
+  const dadAction = getVal("Dad's Excuse / Action");
+  const kidAction = getVal("Kid's Funny Action");
+  const set = getScenarioBubbleSet(scene, dadAction, kidAction);
+  const map = {
+    "Mom Speech Bubble": set.mom,
+    "Dad Speech Bubble": set.dad,
+    "Kid Speech Bubble": set.kid
+  };
+
+  ["Mom Speech Bubble","Dad Speech Bubble","Kid Speech Bubble"].forEach(key=>{
+    const el = document.getElementById(id(key));
+    if(!el || locks[id(key)]) return;
+    if(el.value === "none" || el.value === ""){
+      let available = map[key].filter(v => Array.from(el.options).some(o => o.value === v));
+      if(key === "Kid Speech Bubble"){
+        const ageAllowed = ageMatchedKidBubbles(kidAction);
+        if(isNewbornOrTinyInfant(kidAction)){
+          available = ageAllowed;
+        } else {
+          available = available.filter(x => ageAllowed.includes(x));
+          if(!available.length) available = ageAllowed;
+        }
+      }
+      el.value = nextNoRepeatOption(key, available.length ? available : data[key].filter(x => x !== "none" && x !== ""), scene);
+    }
+  });
+}
+
+
+function getKidAgeGroup(kidAction){
+  const k = (kidAction || "").toLowerCase();
+  if(k.includes("newborn") || k.includes("1-month") || k.includes("2-month") || k.includes("3-month") || k.includes("4-month") || k.includes("5-month") || k.includes("6-month") || k.includes("7-month") || k.includes("8-month") || k.includes("9-month") || k.includes("10-month") || k.includes("11-month")) return "nonverbalBaby";
+  if(k.includes("12-month") || k.includes("1-year") || k.includes("18-month") || k.includes("2-year") || k.includes("toddler")) return "toddler";
+  return "kid";
+}
+
+function ageMatchedKidBubbles(kidAction){
+  const age = getKidAgeGroup(kidAction);
+  const thoughtList = data["Baby Thought Bubble (Newborn / Infant Only)"]?.filter(x => x !== "none" && x !== "") || [];
+  const kidList = data["Kid Speech Bubble"].filter(x => x !== "none" && x !== "" && !x.startsWith("Thought:"));
+
+  if(age === "nonverbalBaby"){
+    return thoughtList.map(x => "Thought: " + x.replace(/^Thought:\s*/,""));
+  }
+
+  if(age === "baby"){
+    return ["Wahhh!","Bottle!","Pick me!","Dada hold me!","Snack please!","Up, Dada!","No bye!","Dada mine!","I got juice!"];
+  }
+
+  if(age === "toddler"){
+    return kidList.filter(x =>
+      !["Goo goo!","Wahhh!"].includes(x) &&
+      !x.toLowerCase().includes("gym") &&
+      !x.toLowerCase().includes("drive")
+    );
+  }
+
+  return kidList.filter(x => !["Goo goo!","Wahhh!","Bottle!"].includes(x));
+}
+
+function enforceAgeMatchedBubble(){
+  const kidAction = getVal("Kid's Funny Action");
+  const age = getKidAgeGroup(kidAction);
+  const kidEl = document.getElementById(id("Kid Speech Bubble"));
+  const thoughtEl = document.getElementById(id("Baby Thought Bubble (Newborn / Infant Only)"));
+
+  if(!kidEl || locks[id("Kid Speech Bubble")]) return;
+
+  if(age === "nonverbalBaby"){
+    const thoughts = ageMatchedKidBubbles(kidAction);
+    const picked = nextNoRepeatOption("Baby Thought Bubble (Newborn / Infant Only)", thoughts, kidAction);
+    kidEl.value = "none";
+    if(thoughtEl && !locks[id("Baby Thought Bubble (Newborn / Infant Only)")]){
+      thoughtEl.value = picked.replace(/^Thought:\s*/,"");
+    }
+    return;
+  }
+
+  if(thoughtEl && !locks[id("Baby Thought Bubble (Newborn / Infant Only)")]){
+    thoughtEl.value = "none";
+  }
+
+  const allowed = ageMatchedKidBubbles(kidAction);
+  if(kidEl.value === "none" || kidEl.value === "" || kidEl.value.startsWith("Thought:") || !allowed.includes(kidEl.value)){
+    kidEl.value = nextNoRepeatOption("Kid Speech Bubble", allowed, kidAction);
+  }
+}
+
+
+function enforceNewbornThoughtDropdown(){
+  const kidAction = getVal("Kid's Funny Action");
+  const thoughtEl = document.getElementById(id("Baby Thought Bubble (Newborn / Infant Only)"));
+  if(!thoughtEl || locks[id("Baby Thought Bubble (Newborn / Infant Only)")]) return;
+  if(isNewbornOrTinyInfant(kidAction)){
+    const opts = data["Baby Thought Bubble (Newborn / Infant Only)"].filter(x => x !== "none" && x !== "");
+    if(thoughtEl.value === "none" || thoughtEl.value === "") thoughtEl.value = nextNoRepeatOption("Baby Thought Bubble (Newborn / Infant Only)", opts, kidAction);
+  } else {
+    thoughtEl.value = "none";
+  }
+}
+
+function enforceNewbornThoughtBubble(){
+  const kidAction = getVal("Kid's Funny Action");
+  const kidEl = document.getElementById(id("Kid Speech Bubble"));
+  if(!kidEl || locks[id("Kid Speech Bubble")] || !isNewbornOrTinyInfant(kidAction)) return;
+  if(!kidEl.value.startsWith("Thought:")){
+    const thoughts = data["Kid Speech Bubble"].filter(x => x.startsWith("Thought:"));
+    kidEl.value = pickRandom(thoughts);
+  }
+}
+
+
+const unsafeVisualWords = ["trash","dumpster","freedom exit","dump","abandon","danger","hazard","knife","weapon","fire","road edge","busy road","cliff","stairs","escape sign","no escape sign"];
+const unsafeBackgroundOptions = [
+  "cars, sidewalk details, open driveway space, neighbors watching, and playful motion lines"
+];
+
+function isBabyInArmsOrCarrier(kidAction){
+  const k = (kidAction || "").toLowerCase();
+  return k.includes("dad's arms") || k.includes("front carrier") || k.includes("strapped to dad") || k.includes("carrier") || k.includes("mom's arms") || k.includes("stroller");
+}
+
+function isLeavingDadAction(dadAction){
+  const d = (dadAction || "").toLowerCase();
+  return d.includes("leave") || d.includes("sneak") || d.includes("escape") || d.includes("tiptoe") || d.includes("backing out") || d.includes("door") || d.includes("walking out") || d.includes("heading") || d.includes("going") || d.includes("quick errand");
+}
+
+function safeBackgroundForScene(scene){
+  const s = (scene || "").toLowerCase();
+
+  if(s.includes("driveway") || s.includes("front yard") || s.includes("parking lot") || s.includes("garage") || s.includes("car wash") || s.includes("airport")){
+    return ["cars, sidewalk details, open driveway space, neighbors watching, and playful motion lines","neighbors peeking through window","cartoon motion lines everywhere","dog watching the drama"];
+  }
+
+  if(s.includes("walmart") || s.includes("target") || s.includes("checkout") || s.includes("store") || s.includes("grocery")){
+    return ["checkout conveyor belt, shopping carts, price signs, and customers watching","cash register lane with impulse-buy shelves and spilled snacks","customers watching the drama","cartoon motion lines everywhere"];
+  }
+
+  if(s.includes("movie")){
+    return ["movie posters, concession counter, popcorn buckets, velvet ropes, and people watching","ticket kiosk, theater signs, snack counter, and customers reacting","cartoon motion lines everywhere"];
+  }
+
+  if(s.includes("barbershop")){
+    return ["barber chairs, mirrors, clippers, and customers watching","cartoon motion lines everywhere","baby snacks spilled nearby"];
+  }
+
+  if(s.includes("church")){
+    return ["church bulletin board with announcements","ushers and church ladies quietly watching","folding chairs and welcome table in background","cartoon motion lines everywhere"];
+  }
+
+  if(s.includes("doctor") || s.includes("urgent care")){
+    return ["waiting room chairs, clinic posters, and people side-eyeing","baby snacks spilled nearby","cartoon motion lines everywhere","toys scattered on the floor"];
+  }
+
+  if(s.includes("daycare")){
+    return ["cubies, tiny chairs, daycare posters, and scattered toys","baby snacks spilled nearby","toys scattered on the floor","cartoon motion lines everywhere"];
+  }
+
+  if(s.includes("restaurant") || s.includes("coffee")){
+    return ["restaurant booth, menus, spilled fries, and diners watching","baby snacks spilled nearby","sippy cup rolling across the floor","cartoon motion lines everywhere"];
+  }
+
+  if(s.includes("community center") || s.includes("baby shower") || s.includes("family reunion")){
+    return ["folding chairs and welcome table in background","customers watching the drama","baby snacks spilled nearby","cartoon motion lines everywhere"];
+  }
+
+  if(s.includes("hotel") || s.includes("photo studio") || s.includes("beauty salon")){
+    return ["customers watching the drama","baby snacks spilled nearby","cartoon motion lines everywhere"];
+  }
+
+  if(s.includes("car seat")){
+    return ["cars, sidewalk details, open driveway space, neighbors watching, and playful motion lines","baby snacks spilled nearby","cartoon motion lines everywhere"];
+  }
+
+  return [];
+}
+
+function cleanUnsafeCustomDetails(){
+  // Do not rewrite the user's custom details. Earlier versions replaced words like
+  // trash/exit/danger with “safe family-comedy detail,” which made copied prompts
+  // read like broken documents. Safety is handled through the fixed safety rules
+  // and scene-aware background swaps instead.
+  return;
+}
+
+
+function dadAvoidingResponsibilityAction(dadAction){
+  const d = (dadAction || "").toLowerCase();
+  return d.includes("trying to leave") ||
+         d.includes("sneaking") ||
+         d.includes("escape") ||
+         d.includes("tiptoe") ||
+         d.includes("backing out") ||
+         d.includes("walking out") ||
+         d.includes("quick errand") ||
+         d.includes("heading") ||
+         d.includes("going fishing") ||
+         d.includes("game night") ||
+         d.includes("barbershop") ||
+         d.includes("gym") ||
+         d.includes("freedom") ||
+         d.includes("door quietly");
+}
+
+function kidActionHasDadHoldingBaby(kidAction){
+  const k = (kidAction || "").toLowerCase();
+  return k.includes("dad's arms") ||
+         k.includes("strapped to dad") ||
+         k.includes("front carrier strapped to dad") ||
+         k.includes("dad nervously holds") ||
+         k.includes("dad while dad tries to leave");
+}
+
+function safeKidActionForEscapingDad(kidAction){
+  const k = (kidAction || "").toLowerCase();
+
+  if(k.includes("newborn") || k.includes("1-month") || k.includes("2-month") || k.includes("3-month") || k.includes("4-month") || k.includes("5-month")){
+    return nextNoRepeatOption("Kid's Funny Action", [
+      "newborn sleeping safely in a stroller beside mom while dad tries to leave",
+      "newborn bundled safely in a car seat carrier beside mom",
+      "newborn resting safely in a stroller while mom points at dad",
+      "tiny newborn wrapped up safely in a stroller with the diaper bag beside mom"
+    ], "escapeSafeNewborn");
+  }
+
+  if(k.includes("6-month") || k.includes("7-month") || k.includes("8-month") || k.includes("9-month") || k.includes("10-month") || k.includes("11-month")){
+    return nextNoRepeatOption("Kid's Funny Action", [
+      "7-month-old crawling safely toward dad's sneakers from beside mom",
+      "8-month-old reaching toward dad's shoe while sitting safely near mom",
+      "10-month-old tugging the diaper bag zipper from the floor near mom",
+      "11-month-old standing wobbly beside mom while reaching toward dad"
+    ]);
+  }
+
+  return nextNoRepeatOption("Kid's Funny Action", [
+    "12-month-old baby toddling after dad with one shoe on",
+    "18-month-old dragging the diaper bag with both hands",
+    "2-year-old dragging a diaper bag behind dad",
+    "toddler chasing dad with tiny shoes",
+    "toddler sitting on dad's shoes so he cannot leave",
+    "toddler pulling the diaper bag like a suitcase"
+  ]);
+}
+
+
+
+function enforceBabyShowerPregnancyLogic(){
+  const scene = getVal("Scene & Setting").toLowerCase();
+  const customExtra = document.getElementById(id("Custom Extra Details"));
+  if(!customExtra || !scene.includes("baby shower")) return;
+
+  const line = " Baby shower rule: Mom must look visibly pregnant with a clear baby bump, while the existing child stays in the scene and remains part of the comedy. Do not remove, replace, or hide the other child.";
+  if(!customExtra.value.toLowerCase().includes("baby shower rule: mom must look visibly pregnant")){
+    customExtra.value = (customExtra.value.trim() ? customExtra.value.trim() + line : line.trim());
+  }
+}
+
+
+function enforcePropClarityLogic(){
+  const mom = getVal("Mom's Attitude");
+  const customExtra = document.getElementById(id("Custom Extra Details"));
+  if(!customExtra) return;
+
+  const propWords = ["pacifier","baby bottle","wipes","keys","tiny shoe","diaper bag","stroller handle"];
+  const hasProp = propWords.some(w => (mom || "").toLowerCase().includes(w));
+
+  if(hasProp && !customExtra.value.toLowerCase().includes("small props must stay attached")){
+    const propLine = " Small props must stay attached to the correct character’s hand or baby gear. Do not make pacifiers, bottles, keys, or wipes float in midair. If Mom holds a pacifier, show it clearly between her fingers or near her hand like evidence.";
+    customExtra.value = (customExtra.value.trim() ? customExtra.value.trim() + propLine : propLine.trim());
+  }
+}
+
+function enforceDadLeavingVisualLogic(){
+  const dadAction = getVal("Dad's Excuse / Action");
+  const customExtra = document.getElementById(id("Custom Extra Details"));
+  if(!customExtra || !dadAvoidingResponsibilityAction(dadAction)) return;
+
+  if(!customExtra.value.toLowerCase().includes("dad must read visually as leaving")){
+    const dadLine = " Dad must read visually as leaving, not entering: show him angled toward the exit, one foot outside or stepping away, hand on the door, and looking back guilty at Mom.";
+    customExtra.value = (customExtra.value.trim() ? customExtra.value.trim() + dadLine : dadLine.trim());
+  }
+}
+
+
+function enforceDadResponsibilityLogic(){
+  const dadAction = getVal("Dad's Excuse / Action");
+  const kidAction = getVal("Kid's Funny Action");
+  const kidEl = document.getElementById(id("Kid's Funny Action"));
+  const customKid = document.getElementById(id("Kid's Funny Action")+"Custom");
+
+  if(!kidEl || locks[id("Kid's Funny Action")]) return;
+
+  if(dadAvoidingResponsibilityAction(dadAction) && kidActionHasDadHoldingBaby(kidAction)){
+    if(customKid) customKid.value = "";
+    setSelectValue("Kid's Funny Action", safeKidActionForEscapingDad(kidAction));
+  }
+}
+
+function enforceSafetyStoryLogic(){
+  const scene = getVal("Scene & Setting");
+  const dadAction = getVal("Dad's Excuse / Action");
+  const kidAction = getVal("Kid's Funny Action");
+  const backgroundEl = document.getElementById(id("Background Chaos"));
+  const backgroundCustom = document.getElementById(id("Background Chaos")+"Custom");
+  const customExtra = document.getElementById(id("Custom Extra Details"));
+
+  const babyCloseToDad = isBabyInArmsOrCarrier(kidAction);
+  const leavingDad = isLeavingDadAction(dadAction);
+
+  if(backgroundCustom && backgroundCustom.value){
+    const bad = unsafeVisualWords.some(w => backgroundCustom.value.toLowerCase().includes(w));
+    if(bad) backgroundCustom.value = "";
+  }
+
+  if(backgroundEl && !locks[id("Background Chaos")]){
+    const current = backgroundEl.value.toLowerCase();
+    const unsafe = unsafeVisualWords.some(w => current.includes(w)) || unsafeBackgroundOptions.includes(backgroundEl.value);
+
+    if(unsafe || (babyCloseToDad && leavingDad && current.includes("trash"))){
+      const safeList = safeBackgroundForScene(scene);
+      if(safeList.length){
+        setSelectValue("Background Chaos", pickRandom(safeList));
+      } else {
+        setSelectValue("Background Chaos", "cartoon motion lines everywhere");
+      }
+    }
+  }
+
+  cleanUnsafeCustomDetails();
+
+  if(customExtra && !customExtra.value.toLowerCase().includes("baby must look safe")){
+    const safetyLine = " Baby must look safe, secure, loved, and clearly cared for. Keep the parenting joke warm, clear, and family-friendly.";
+    customExtra.value = (customExtra.value.trim() ? customExtra.value.trim() + safetyLine : safetyLine.trim());
+  }
+}
+
+function enforceSmartSceneLogic(){
+  const scene = getVal("Scene & Setting");
+  const sceneType = getSceneType(scene);
+  const babyShowerNote = scene.toLowerCase().includes("baby shower")
+    ? " Since this is a baby shower scene, make the mother visibly pregnant with a clear baby bump, and keep the other child in the scene as an additional child."
+    : "";
+
+  ["Background Chaos","Lighting & Color","Mom's Attitude","Dad's Excuse / Action","Kid's Funny Action","Camera & Composition"].forEach(key=>{
+    const el = document.getElementById(id(key));
+    const custom = document.getElementById(id(key)+"Custom");
+    if(!el || locks[id(key)]) return;
+
+    const current = custom && custom.value.trim() ? custom.value.trim() : el.value;
+    if(current === "none" || current === "") return;
+
+    const rule = findSceneRule(scene);
+    const allowedByRule = sceneAwareCustomOptions(key, scene);
+    const notInSceneList = allowedByRule.length && !allowedByRule.includes(current);
+    if(isBlockedByScene(current, scene) || notInSceneList){
+      const replacement = randomOptionFor(key, scene);
+      setSelectValue(key, replacement);
+    }
+  });
+
+  enforceSpeechBubbleLogic();
+  enforceNewbornThoughtDropdown();
+  enforceNewbornThoughtBubble();
+  enforceAgeMatchedBubble();
+  enforceDadResponsibilityLogic();
+  enforceSafetyStoryLogic();
+
+  // Add public/location-specific context to custom details automatically, without overwriting user's own custom notes.
+  const extra = document.getElementById(id("Custom Extra Details"));
+  if(extra && !extra.value.trim()){
+    if(sceneType === "public"){
+      extra.value = "Keep the setting clearly public, with location-appropriate signs, seating, background people reacting, and no home-only decor.";
+    } else if(sceneType === "outdoor"){
+      extra.value = "Keep the setting clearly outdoors, with cars, sidewalk details, neighbors, daylight, and no indoor home-only decor.";
+    }
+  }
+}
+function clearAll(show=true){
+  Object.entries(data).forEach(([key,opts])=>{
+    const el=document.getElementById(id(key)); if(el) el.value=opts[0] || "";
+    const c=document.getElementById(id(key)+'Custom'); if(c) c.value="";
+  });
+  if(show) toast("Cleared!");
+}
+function finalChildBubbleText(){
+  const kidAction = getVal("Kid's Funny Action");
+  const babyThought = getVal("Baby Thought Bubble (Newborn / Infant Only)");
+  const kidBubble = getVal("Kid Speech Bubble");
+  if(isNewbornOrTinyInfant(kidAction)){
+    if(babyThought && babyThought !== "none") return "Thought: " + babyThought.replace(/^Thought:\s*/,"");
+    const thoughts = data["Baby Thought Bubble (Newborn / Infant Only)"].filter(x => x !== "none" && x !== "");
+    return "Thought: " + nextNoRepeatOption("Baby Thought Bubble (Newborn / Infant Only)", thoughts, kidAction);
+  }
+  return kidBubble;
+}
+
+function promptText(){
+  const scene=getVal("Scene & Setting"), ethnicity=getVal("Family Ethnicity / Heritage"), skin=getVal("Family Skin Color"), mom=getVal("Mom's Attitude"), dad=getVal("Dad's Excuse / Action"), kid=getVal("Kid's Funny Action"), extraKids=getVal("Extra Kids / Siblings"), momBubble=getVal("Mom Speech Bubble"), dadBubble=getVal("Dad Speech Bubble"), kidBubble=getVal("Kid Speech Bubble"), babyThought=getVal("Baby Thought Bubble (Newborn / Infant Only)");
+  const style=getVal("Comic Style & Vibe"), expr=getVal("Expression Level"), chaos=getVal("Background Chaos"), light=getVal("Lighting & Color"), cam=getVal("Camera & Composition"), quality=getVal("Output Quality"), extra=getVal("Custom Extra Details");
+  const sceneType = getSceneType(scene);
+  const babyShowerNote = scene.toLowerCase().includes("baby shower")
+    ? " Since this is a baby shower scene, make the mother visibly pregnant with a clear baby bump, and keep the other child in the scene as an additional child."
+    : "";
+  const sceneNote = sceneType === "public"
+    ? `Make the location feel like a believable ${scene}, not a home. Use only setting-appropriate signs, seating, people, counters, posters, props, or fixtures for that exact location.`
+    : sceneType === "outdoor"
+    ? `Make the location feel like a believable outdoor ${scene}. Use only setting-appropriate cars, sidewalks, curb details, daylight, signs, people, or activity for that exact location.`
+    : `Make the location feel like a believable ${scene} with home-appropriate details only when the selected scene is actually inside a home.`;
+  const extraKidsNote = extraKids && extraKids !== "none"
+    ? ` Add supporting kids/siblings: ${extraKids}. Keep them as extra background/supporting characters only. They should react naturally, add comedy, and match the family scene without overcrowding the image. Mom, dad, and the main child must stay the focus.`
+    : "";
+  const dadMovementNote = sceneType === "home"
+    ? "clearly moving OUT of the home or away from the family responsibility, not coming inside. His body language must show him facing or stepping toward the exit, with one foot outside, hand on the doorknob, shoulder turned away, or body angled outward"
+    : sceneType === "public"
+    ? "clearly moving away from the family responsibility and toward the public exit path, lobby doors, checkout exit, or open walkway, not entering the scene. His body language must show him angled away from Mom with guilty backward eye contact, one foot stepping away, and shoulders turned toward the exit route"
+    : "clearly moving away from the family responsibility toward the curb, driveway, parking lot, gate, sidewalk, or outdoor exit path, not walking back in. His body language must show him angled away from Mom with one foot stepping away, shoulders turned outward, and a guilty backward glance";
+  return `Create a funny, exaggerated cartoon comic scene in a glossy, high-definition animated style.
+
+SCENE SETUP:
+Create the scene at/in: ${scene}. ${sceneNote} A woman stands with ${mom}, clearly scolding her husband. If she is holding a pacifier, baby bottle, wipes, keys, or any small prop, keep the prop low and clearly in her hand like evidence, not floating in the air and not raised like a magical object. The husband is ${dad}, looking guilty and ${dadMovementNote}. Behind him, their child is ${kid}, adding hilarious chaotic energy to the moment.
+
+CHARACTER DETAILS:
+Create a ${ethnicity} with ${skin}.${babyShowerNote}${extraKidsNote} Use big expressive cartoon eyes, playful exaggerated features, family-comedy facial expressions, and slightly dramatic reactions for humor. Make the mom look firm and unbothered, the dad look nervous and caught, and the child look determined, innocent, and funny.
+
+BACKGROUND DETAILS:
+Add ${chaos}. Keep the background funny, busy, and slightly chaotic without stealing focus from mom, dad, and the main child. Do not add decor that does not belong in the selected location.
+
+TEXT BUBBLES:
+Add three clear comic speech bubbles:
+- Mother says exactly: "${momBubble}"
+- Father says exactly: "${dadBubble}"
+- Child/baby bubble says exactly: "${finalChildBubbleText()}"
+
+If the child is under 12 months old, make the child/baby bubble a THOUGHT BUBBLE instead of spoken dialogue because babies under 12 months do not talk. The infant thought bubble must visually come from the infant only: place it beside or above the baby, connect it with small bubble dots leading directly from the baby's head, and do not place it near the mother, father, or their feet. For toddlers and older kids, use a normal speech bubble. Make each bubble readable, placed near the correct character, and not blocking faces.
+
+STYLE:
+Use ${style}, ${expr}, ${light}. Make it bright, vibrant, polished, glossy, clean, high-resolution, ultra-detailed, and commercial-ready.
+
+COMPOSITION:
+Use ${cam}. Keep the full scene visible with no cropping. Show mom, dad, the main child, and any selected supporting kids clearly without overcrowding the frame. Add motion energy so the kid looks active, dad looks mid-step, and mom stands firm. Dad’s direction must be visually clear: he is trying to leave or sneak away from responsibility, not entering the scene. Use outward-facing feet, a clear exit path, body angled away from Mom, and a guilty backward glance. If the scene has a door, he may have one hand on the exit door; if it is public or outdoors, use the correct exit walkway, curb, lobby doors, parking lot path, or sidewalk instead. The motion should feel playful and safe, never harmful or scary.
+
+QUALITY RULES:
+${quality}. Make the speech bubble readable. Avoid blurry faces, extra limbs, bad hands, cropped bodies, unreadable text, or messy composition.
+
+SAFE FAMILY COMEDY RULES:
+This is a funny parenting comedy scene only. The father is NOT abandoning, harming, throwing away, or neglecting the baby. The joke is that Dad is trying to escape responsibility, so if Dad is sneaking out, leaving, or avoiding baby duty, he should NOT be holding the baby. In those scenes, the baby should be safely with mom, in a stroller, in a car seat carrier, or following behind him while mom holds Dad accountable. The baby must look safe, loved, protected, and clearly cared for at all times. If the baby is in the father’s arms, the father must hold the baby securely and away from unsafe objects. Do not place the baby near trash cans, dumpsters, dangerous props, roads, exits, stairs, sharp objects, or anything that could make the scene look scary or unsafe. Do not include “freedom exit,” “escape,” “dump,” “trash,” “abandon,” or other dark symbolic signs around the baby. Do not show Dad entering the room when the prompt says he is trying to leave. Keep the joke light, warm, and family-safe. Avoid confusing prop placement: pacifiers, bottles, keys, wipes, and tiny baby items must stay connected to a character’s hand, bag, stroller, or baby area. Do not make props float, glow, or hover.
+
+CUSTOM DETAILS:
+${extra || "none"}`;
+}
+function generatePrompt(){enforceSmartSceneLogic();document.getElementById('promptOut').textContent=promptText();}
+function generateVideo(){
+  const mom=getVal("Mom's Attitude"), dad=getVal("Dad's Excuse / Action"), kid=getVal("Kid's Funny Action"), momBubble=getVal("Mom Speech Bubble"), dadBubble=getVal("Dad Speech Bubble"), kidBubble=finalChildBubbleText();
+  document.getElementById('videoOut').textContent=`8-SECOND ANIMATED VIDEO SCRIPT
+
+0-2 sec: Camera pushes in fast as Dad is ${dad}, sneaking toward freedom with a guilty face.
+2-4 sec: Mom snaps into frame with ${mom}. Her eyes narrow like she already knows the whole damn story.
+4-6 sec: The toddler appears behind Dad, ${kid}. Add squeaky toy sounds, quick motion lines, and comic chaos.
+6-8 sec: Three bubbles pop up fast: Mom says "${momBubble}", Dad says "${dadBubble}", and the child/baby bubble says "${kidBubble}". If the baby is under 12 months old, use a thought bubble for the baby instead of spoken dialogue, with bubble dots clearly leading from the infant's head.
+
+VOICEOVER:
+"He thought he was escaping... until his tiny boss packed a diaper bag."
+
+SFX:
+Door creak, sneaker squeak, baby giggle, comic pop, dramatic record scratch.`;
+}
+function generateSuno(){
+  const momBubble=getVal("Mom Speech Bubble"), dadBubble=getVal("Dad Speech Bubble"), kidBubble=finalChildBubbleText(), scene=getVal("Scene & Setting"), dad=getVal("Dad's Excuse / Action");
+  document.getElementById('sunoOut').textContent=`SUNO STYLE PROMPT:
+Funny family comedy jingle, upbeat bounce, playful sitcom energy, glossy cartoon vibe, claps, bass bounce, bright keys, catchy mom voice hook, humorous daddy daycare chaos.
+
+LYRICS:
+He had his gym bag ready
+Sneaking out the door
+Baby had the diaper bag
+Dragging on the floor
+
+Mama said hold up
+Where you think you going
+Tiny boss behind you
+And the truth is showing
+
+HOOK:
+"${momBubble}"
+Dad said "${dadBubble}"
+Baby said "${kidBubble}"
+No escape today
+Daddy better take him maybe
+
+30-SECOND VERSION:
+Upbeat funny family jingle about ${scene}, Dad ${dad}, Mom catching him, and the toddler joining the mission. Keep it playful, catchy, clean, and viral.`;
+}
+function generateMarketing(){
+  const momBubble=getVal("Mom Speech Bubble"), dadBubble=getVal("Dad Speech Bubble"), kidBubble=finalChildBubbleText();
+  document.getElementById('marketingOut').textContent=`CAPTION:
+When Dad tries to sneak out, Mom has receipts, Dad has excuses, and the baby has a whole travel plan. 😂
+
+HOOKS:
+1. He thought he was leaving alone. Cute.
+2. The diaper bag said otherwise.
+3. Mom had ONE thing to say: "${momBubble}"
+Dad tried: "${dadBubble}"
+The baby sealed the deal: "${kidBubble}"
+
+HASHTAGS:
+#FamilyComedy #MomLife #DadLife #BabyDaddyDrama #FunnyCartoon #ComicScene #ParentingHumor #DigitalCreator #AIArtPrompts #ViralContent
+
+SEO KEYWORDS:
+funny family comic prompt, baby daddy cartoon prompt, mom life AI image prompt, parenting humor comic scene, glossy cartoon prompt generator
+
+CTA:
+Use this generator to create hilarious family comedy scenes for TikTok, Instagram, YouTube Shorts, stickers, thumbnails, memes, and digital products.`;
+}
+function generateAll(){generatePrompt();generateVideo();generateSuno();generateMarketing();}
+function copyText(id){
+  const el = document.getElementById(id);
+  if(!el) return toast("Nothing to copy");
+
+  // Force plain text only. This prevents the browser from copying the output as an HTML document.
+  const text = (el.innerText || el.textContent || "")
+    .replace(/\u00a0/g, " ")
+    .trim();
+
+  if(!text) return toast("Nothing to copy");
+
+  function fallbackCopy(){
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed";
+    ta.style.left = "-9999px";
+    ta.style.top = "0";
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    document.execCommand("copy");
+    document.body.removeChild(ta);
+    toast("Copied as plain text!");
+  }
+
+  if(navigator.clipboard && window.ClipboardItem){
+    const plainBlob = new Blob([text], {type: "text/plain"});
+    navigator.clipboard.write([new ClipboardItem({"text/plain": plainBlob})])
+      .then(() => toast("Copied as plain text!"))
+      .catch(fallbackCopy);
+  } else if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text)
+      .then(() => toast("Copied as plain text!"))
+      .catch(fallbackCopy);
+  } else {
+    fallbackCopy();
+  }
+}
+function saveHistory(){
+  const t=document.getElementById('promptOut').textContent;
+  if(!t || t.includes("Choose your")) return toast("Generate first");
+  let h=JSON.parse(localStorage.getItem('comicPromptHistory')||'[]');
+  h.unshift({text:t,date:new Date().toLocaleString()}); h=h.slice(0,12);
+  localStorage.setItem('comicPromptHistory',JSON.stringify(h)); renderHistory(); toast("Saved!");
+}
+function renderHistory(){
+  const h=JSON.parse(localStorage.getItem('comicPromptHistory')||'[]');
+  const box=document.getElementById('history'); box.innerHTML='';
+  h.forEach((item,i)=>{
+    const div=document.createElement('div'); div.className='history-item';
+    div.innerHTML=`<span>${item.text.slice(0,70)}...</span><button onclick="loadHistory(${i})">Load</button>`;
+    box.appendChild(div);
+  });
+}
+function loadHistory(i){
+  const h=JSON.parse(localStorage.getItem('comicPromptHistory')||'[]');
+  document.getElementById('promptOut').textContent=h[i].text;
+  toast("Loaded");
+}
+function clearHistory(){localStorage.removeItem('comicPromptHistory');renderHistory();toast("History cleared");}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',1400)}
+makeControls();loadPresets();renderHistory();
+</script>
+</body>
+</html>
